@@ -1,4 +1,4 @@
-# NITCONF
+# NITCONF - MODULE 2
 NITCONF is a conference website designed to facilitate paper submissions for evaluation. The platform enables reviewers to assess papers assigned to them by the Program Committee. The repository encompasses the entire Reviewers Project for this conference.
 
 
@@ -176,6 +176,10 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
   4. **Revision**: Shows the revision round of the paper (e.g., first, second).
   5. **Deadline**: Lists the review deadline set by the Program Committee.
   6. **Decline**: A button that can be pressed if the reviewer chooses not to review that paper.
+     
+ 
+     ![1](https://github.com/afrasd/NITCONF/assets/103187343/4a1f5693-12b0-46d3-b598-0eaae21ff74e)
+
 
 ### 'Reviewed' Page
 - **Content**: Lists all reviewed papers.
@@ -183,7 +187,11 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
   1. **Pdf id and Downloads**: Includes a pdf id, 'Abstract' and 'PDF Download' buttons.
   2. **Paper Title and Edit Options**: Displays the paper's title with 'Edit' and 'Display All Reviews' buttons. 'Edit' allows modification of the most recent review. 'Display All' shows all past reviews.
   3. **Status**: The final status of the paper (Accept/Reject).
-  4. **Deadline**: The review deadline, after which the paper is removed from this page.
+  4. **Revision**: Shows the revision round of the paper (e.g., first, second).
+  5. **Deadline**: The review deadline, after which the paper is removed from this page.
+ ![2](https://github.com/afrasd/NITCONF/assets/103187343/3c86a087-d8ae-4a67-85b0-adbc787777c6)
+
+  
   
 ### 'View History' Page
 - **Content**: Lists all reviewed papers in the last 6 months.
@@ -191,6 +199,13 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
   1. **Pdf id and Downloads**: Includes a paper pdf id, 'Abstract' and 'PDF Download' buttons.
   2. **Paper Title and Edit Options**: Displays the paper's title with a 'Display All Reviews' button.
   3. **Status**: The final status of the paper (Accept/Reject).
+  4. **Revision**: Shows the revision round of the paper (e.g., first, second).
+  5. **Deadline**: The review deadline, after which the paper is removed from this page.
+
+     
+ ![3](https://github.com/afrasd/NITCONF/assets/103187343/6a0ac50c-11a8-41f3-9a9b-7fae0e3a2c41)
+
+     
 
 ### 'Notifications' Page
 - **Content**: Lists all notifications from PC, like paper assignments and deadline reminders.
