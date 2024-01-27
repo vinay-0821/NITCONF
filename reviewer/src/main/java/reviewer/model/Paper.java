@@ -1,11 +1,13 @@
 package reviewer.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 @Table(name="paper")
@@ -15,6 +17,9 @@ public class Paper {
 	private Long Id;
 	private List<String> tags;
 	private LocalDateTime Deadline;
+	
+	@ManyToMany(mappedBy = "paper")
+	private List<User> user = new ArrayList<>(); 
 	
 	public Long getId() {
 		return Id;

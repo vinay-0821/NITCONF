@@ -1,5 +1,6 @@
 package reviewer.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,10 @@ public class User implements UserDetails{
 	private String contactno;
 	private String bio;
 	private List<String> tags;
+	
+	
+	@ManyToMany()
+	private List<Paper> paper = new ArrayList<>();
 	
 	
 	public User()
