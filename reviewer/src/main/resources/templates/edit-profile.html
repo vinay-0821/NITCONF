@@ -46,7 +46,7 @@
             </div>
           </div>
         </nav>
-     </header> 
+</header> 
 
 		
 		<main>
@@ -55,16 +55,16 @@
 					<div class="col-md-9">
 						<form class="mt-3" method="post" th:action="@{/edit-profile}">
 							<label class="form-label" for="username">Username:</label>
-							<input class="form-control" th:name="${user.username}" th:value="${user.username}" placeholder="--" disabled>
+							<input class="form-control" th:field="${user.username}" th:name="${user.username}" th:value="${user.username}" placeholder="--" disabled>
 							<br>
 							<label class="form-label" for="name">Name:</label>
-						    <input class="form-control" th:name="${user.name}" th:value="${user.name}" placeholder="Enter your name here">
+						    <input class="form-control" th:field="${user.name}" th:name="${user.name}" th:value="${user.name}" placeholder="Enter your name here">
 						    <br>
 						    <label class="form-label" for="contactno">Contact No:</label>
-						    <input class="form-control" th:name="${user.contactno}" th:value="${user.contactno}" placeholder="Enter your contact No" >
+						    <input class="form-control"  th:field="${user.contactno}" th:name="${user.contactno}" th:value="${user.contactno}" placeholder="Enter your contact No" >
 						    <br>
 							  <label for="${user.bio}">Bio</label>
-							  <textarea class="form-control" placeholder="Enter you bio here" th:text="${user.name}" th:name="${user.bio}" ></textarea>			
+							  <textarea class="form-control" placeholder="Enter you bio here" th:field="${user.bio}" th:text="${user.bio}" th:name="${user.bio}" ></textarea>			
 							<br>
 							<div class="tags">
 							<p>Tags:</p>

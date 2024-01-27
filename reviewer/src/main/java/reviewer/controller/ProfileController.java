@@ -4,7 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import reviewer.model.User;
 
 @Controller
 @RequestMapping("/profile")
@@ -12,17 +15,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class ProfileController {
 	
 	@GetMapping
-	public String viewprofile()
-	{
-		return "profile";
-	}
-	
-	@PostMapping
-	public String profilEdit()
+	public String viewprofile(@SessionAttribute User user)
 	{
 		
-		System.out.println("profile submitted");
+		System.out.println(user.toString());
 		return "profile";
 	}
+
 
 }

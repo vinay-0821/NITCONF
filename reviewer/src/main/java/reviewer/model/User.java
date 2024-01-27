@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +16,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+
+@Data
 @Entity
+@Scope("session")
 @NoArgsConstructor
 @RequiredArgsConstructor       //why we actually need them
 @Table(name="user")
@@ -33,8 +38,9 @@ public class User implements UserDetails{
 	private String name;
 	private String contactno;
 	private String bio;
-	private List<String> tags;
 	
+	@ManyToMany()
+    private List<Tags> tags = new ArrayList<>();
 	
 	@ManyToMany()
 	private List<Paper> paper = new ArrayList<>();
@@ -51,14 +57,21 @@ public class User implements UserDetails{
 		this.password = password;
 	}
 	
-	public void setUsername(String username) {
+	public User(String username,String password,String contactno,String bio,String name)
+	{
 		this.username = username;
-	}
-
-	public void setPassword(String password) {
 		this.password = password;
+		this.contactno = contactno;
+		this.bio = bio;
+		this.name = name;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", name=" + name + ", contactno=" + contactno
+				+ ", bio=" + bio + "]";
+	}
 	
 	
 	@Override
@@ -124,16 +137,16 @@ public class User implements UserDetails{
 		this.bio = bio;
 	}
 
-	public List<String> getTags() {
-		return tags;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setTags(List<String> tags) {
-		this.tags = tags;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 
 	
-	
+
 
 }
