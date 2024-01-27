@@ -38,10 +38,12 @@ public class DashboardController {
 		user(principal);
 		return "dashboard";
 	}
+//	
+//	@GetMapping("/edit-profile")
+//	public String editProfile(Model model)
+//	{
+//		return "editprofile";
+//	}
 	
-	@GetMapping("/edit-profile")
-	public String editProfile(Model model)
-	{
-		return "editprofile";
-	}
+	
 }
