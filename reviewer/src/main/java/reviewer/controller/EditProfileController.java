@@ -7,21 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@RequestMapping("/profile")
+@RequestMapping("/edit-profile")
 @SessionAttributes("user")
-public class ProfileController {
+public class EditProfileController {
+	
 	
 	@GetMapping
-	public String viewprofile()
+	public String editProfile()
 	{
-		return "profile";
+		return "edit-profile";
 	}
 	
 	@PostMapping
-	public String profilEdit()
+	public String editProfileform()
 	{
 		
-		System.out.println("profile submitted");
+		//update database
 		return "profile";
 	}
 
