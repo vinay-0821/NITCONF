@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
-@Scope("session")
+@Scope("session")   //need to remove
 @NoArgsConstructor
 @RequiredArgsConstructor       //why we actually need them
 @Table(name="user")
