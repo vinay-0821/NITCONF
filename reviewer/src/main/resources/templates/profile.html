@@ -51,24 +51,28 @@
 		
 		<main>
 			<div class="container w-50">
-				<div class="row">
+				
+	
+				<h2>PROFILE</h2>
+                <br>
+				<div class="row d-flex">
 					<div class="col-md-9">
 							<label class="form-label" for="username">Username:</label>
-							<input class="form-control" th:name="${user.username}" th:value="${user.username}" disabled>
+							<input class="form-control" th:field="${user.username}" th:name="${user.username}" th:value="${user.username}" disabled>
 							<br>
 							<label class="form-label" for="name">Name:</label>
-						    <input class="form-control" th:name="${user.name}" th:value="${user.name} ?: 'Unknown'" disabled>
+						    <input class="form-control" th:field="${user.name}" th:name="${user.name}" th:value="${user.name} ?: 'Unknown'" disabled>
 						    <br>
 						    <label class="form-label" for="contactno">Contact No:</label>
-						    <input class="form-control" th:name="${user.contactno}" th:value="${user.contactno} ?: 'Unknown'" disabled>
+						    <input class="form-control" th:field="${user.contactno}" th:name="${user.contactno}" th:value="${user.contactno} ?: 'Unknown'" disabled>
 						    <br>
-							  <label for="${user.bio}">Bio</label>
-							  <textarea class="form-control" placeholder="Enter you bio here" th:text="${user.name} ?: 'Unknown'" th:name="${user.bio}" disabled></textarea>			
+							  <label for="bio">Bio</label>
+							  <textarea class="form-control" th:field="${user.bio}" placeholder="Enter you bio here" th:text="${user.bio} ?: 'Unknown'" th:name="${user.bio}" disabled></textarea>			
 							<br>
 							<div class="tags">
 							<p>Tags:</p>
 							<ul class="list-group list-group-vertical">
-							   <li h:each="str : ${user.tags}" th:text="${str}" class="list-group-item list-group-item-light"></li>
+							   <li th:each="tags : ${user.tags}" th:text="${tags.name}" class="list-group-item list-group-item-light"></li>
 							</ul>
 							</div>
 							<br>

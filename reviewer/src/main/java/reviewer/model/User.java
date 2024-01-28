@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,16 +16,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+
+@Data
 @Entity
+@Scope("session")
 @NoArgsConstructor
 @RequiredArgsConstructor       //why we actually need them
 @Table(name="user")
 public class User implements UserDetails{
 	
 	
+	
+
 	private static final long serialVersionUID = 1L;  //what it actually means ?
 	
 	@Id
@@ -33,8 +40,9 @@ public class User implements UserDetails{
 	private String name;
 	private String contactno;
 	private String bio;
-	private List<String> tags;
 	
+	@ManyToMany()
+    private List<Tags> tags = new ArrayList<>();
 	
 	@ManyToMany()
 	private List<Paper> paper = new ArrayList<>();
@@ -51,15 +59,32 @@ public class User implements UserDetails{
 		this.password = password;
 	}
 	
-	public void setUsername(String username) {
+	public User(String username,String password,String contactno,String bio,String name)
+	{
 		this.username = username;
+		this.password = password;
+		this.contactno = contactno;
+		this.bio = bio;
+		this.name = name;
+	}
+	
+	public User(String username, String password, String name, String contactno, String bio, List<Tags> tags,List<Paper> paper) {
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.contactno = contactno;
+		this.bio = bio;
+		this.tags = tags;
+		this.paper = paper;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", name=" + name + ", contactno=" + contactno
+				+ ", bio=" + bio + ", tags=" + tags + ", paper=" + paper + "]";
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {     
@@ -124,16 +149,49 @@ public class User implements UserDetails{
 		this.bio = bio;
 	}
 
-	public List<String> getTags() {
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
+	
+	public void addToTags(Tags tag)
+	{
+		
+		//need to modify delete previous list
+		tags.add(tag);
+		return;
+	}
+	public List<Tags> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(List<Tags> tags) {
 		this.tags = tags;
 	}
 
+	public List<Paper> getPaper() {
+		return paper;
+	}
+
+	public void setPaper(List<Paper> paper) {
+		this.paper = paper;
+	}
+
+	public void removeTags() {
+		
+		tags.clear();
+		// TODO Auto-generated method stub
+		
+	}
 
 	
+
 	
+
 
 }

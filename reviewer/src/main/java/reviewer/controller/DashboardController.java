@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import reviewer.data.UserRepository;
 import reviewer.model.User;
 
 
 @Controller
 @RequestMapping("/dashboard")
-@SessionAttributes("user")
+@SessionAttributes(("user"))
 public class DashboardController {
 
 	
@@ -25,25 +26,21 @@ public class DashboardController {
 	
 	
 	@ModelAttribute("user")
-	public User user(Principal principal)
+	public User user()
 	{
-		return userRepository.findUserByUsername(principal.getName());
+		return new User();
 	}
 
 	
 	
 	@GetMapping
-	public String dashboard(Principal principal,Model model)
+	public String dashboard(Principal principal,Model model,HttpSession session)
 	{
-		user(principal);
+		
+		User user = userRepository.findById(userRepository.findUserByUsername(principal.getName()).getUsername()).get();
+		model.addAttribute("user", user);
+		System.out.println(user.toString());
 		return "dashboard";
 	}
-//	
-//	@GetMapping("/edit-profile")
-//	public String editProfile(Model model)
-//	{
-//		return "editprofile";
-//	}
-	
 	
 }
