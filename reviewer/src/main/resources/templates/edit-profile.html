@@ -53,7 +53,7 @@
 			<div class="container w-50">
 				<div class="row">
 					<div class="col-md-9">
-						<form class="mt-3" method="post" th:action="@{/edit-profile}">
+						<form class="mt-3" method="post" th:action="@{/edit-profile}" th:object="${user}">
 							<label class="form-label" for="username">Username:</label>
 							<input class="form-control" th:field="${user.username}" th:name="${user.username}" th:value="${user.username}" placeholder="--" disabled>
 							<br>
@@ -66,12 +66,27 @@
 							  <label for="${user.bio}">Bio</label>
 							  <textarea class="form-control" placeholder="Enter you bio here" th:field="${user.bio}" th:text="${user.bio}" th:name="${user.bio}" ></textarea>			
 							<br>
-							<div class="tags">
+						<!--	<div class="tags">
 							<p>Tags:</p>
-							<ul class="list-group list-group-vertical">
-							   <li h:each="str : ${user.tags}" th:text="${str}" class="list-group-item list-group-item-light"></li>
-							</ul>
+							<div class="form-check">
+								<div th:each ="tag : ${tags}">
+									<input class="form-check-input" type="checkbox" th:value="${tag.name}" th:field="${user.tags}">
+							        <label class="form-check-label" for="flexCheckDefault" th:text="${tag.name}">
+							            Default value
+							        </label>
+								</div>
 							</div>
+							</div> -->
+							<div class="tags">
+							    <p>Tags:</p>
+							    <div class="form-check">
+							        <div th:each="tag : ${tags}">
+							            <input class="form-check-input" type="checkbox" th:value="${tag.name}" th:field="${selectedTags.selectedTags}" />
+							            <label class="form-check-label" th:for="${'tag_' + tag.name}" th:text="${tag.name}"></label>
+							        </div>
+							    </div>
+							</div>
+
 							<br>
                            <div class="d-flex justify-content-center">
 							<button class="btn btn-primary" type="submit">Submit</button>

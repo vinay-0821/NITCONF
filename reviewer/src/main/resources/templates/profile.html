@@ -72,7 +72,7 @@
 							<div class="tags">
 							<p>Tags:</p>
 							<ul class="list-group list-group-vertical">
-							   <li h:each="str : ${user.tags}" th:text="${str}" class="list-group-item list-group-item-light"></li>
+							   <li th:each="tags : ${user.tags}" th:text="${tags.name}" class="list-group-item list-group-item-light"></li>
 							</ul>
 							</div>
 							<br>

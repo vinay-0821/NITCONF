@@ -1,16 +1,13 @@
 package reviewer.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 
+//@Data   data annotation is not creating getters and setters  
 @Entity
 @Table(name="tags")
 public class Tags {
@@ -21,5 +18,26 @@ public class Tags {
 	
 	@Column(name="name")
 	private String name;
+	
+	public Tags()
+	{
+		
+	}
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
     
 }
