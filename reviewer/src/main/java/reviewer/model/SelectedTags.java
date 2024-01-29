@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SelectedTags {
 	
-	private ArrayList<String> selectedTags;
+	private ArrayList<String> selectedTags = new ArrayList<String>();;
 	
 	
 	public SelectedTags()

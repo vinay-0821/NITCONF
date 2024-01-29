@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,13 +24,10 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
-@Scope("session")   //need to remove
 @NoArgsConstructor
 @RequiredArgsConstructor       //why we actually need them
 @Table(name="user")
 public class User implements UserDetails{
-	
-	
 	
 
 	private static final long serialVersionUID = 1L;  //what it actually means ?
@@ -47,6 +45,9 @@ public class User implements UserDetails{
 	@ManyToMany()
 	private List<Paper> paper = new ArrayList<>();
 	
+	@OneToMany()
+	private List<Review> review = new ArrayList<>();
+	
 	
 	public User()
 	{
@@ -57,15 +58,6 @@ public class User implements UserDetails{
 	{
 		this.username = username;
 		this.password = password;
-	}
-	
-	public User(String username,String password,String contactno,String bio,String name)
-	{
-		this.username = username;
-		this.password = password;
-		this.contactno = contactno;
-		this.bio = bio;
-		this.name = name;
 	}
 	
 	public User(String username, String password, String name, String contactno, String bio, List<Tags> tags,List<Paper> paper) {

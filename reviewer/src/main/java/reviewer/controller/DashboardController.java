@@ -36,10 +36,12 @@ public class DashboardController {
 	@GetMapping
 	public String dashboard(Principal principal,Model model,HttpSession session)
 	{
-		
+		System.out.println("hello");
+		//returns optional class
 		User user = userRepository.findById(userRepository.findUserByUsername(principal.getName()).getUsername()).get();
 		model.addAttribute("user", user);
 		System.out.println(user.toString());
+		System.out.println("bye");
 		return "dashboard";
 	}
 	
