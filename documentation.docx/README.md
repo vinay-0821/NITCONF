@@ -13,31 +13,38 @@ Table of Contents
     * 1.5 [References](#15-references)
   * [Overall Description](#overall-description)
     * 2.1 [Product Overview](#21-product-overview)
-    * 2.2 [User Classes and Characteristics](#23-user-classes-and-characteristics)
-    * 2.3 [Operating Environment](#24-operating-environment)
-    * 2.4 [Design and Implementation Constraints](#25-design-and-implementation-constraints)
-    * 2.5 [User Documentation](#26-user-documentation)
-    * 2.6 [Assumptions and Dependencies](#27-assumptions-and-dependencies)
+    * 2.2 [Product Functions](#22-product-functions)
+    * 2.3 [User Classes and Characteristics](#23-user-classes-and-characteristics)
+    * 2.4 [Operating Environment](#24-operating-environment)
+    * 2.5 [Design and Implementation Constraints](#25-design-and-implementation-constraints)
+    * 2.6 [User Documentation](#26-user-documentation)
+    * 2.7 [Assumptions and Dependencies](#27-assumptions-and-dependencies)
   * [External Interface Requirements](#external-interface-requirements)
     * 3.1 [User Interfaces](#31-user-interfaces)
     * 3.2 [Hardware Interfaces](#32-hardware-interfaces)
     * 3.3 [Software Interfaces](#33-software-interfaces)
     
-  <!-- * [System Features](#system-features)
-    * 4.1 [System Feature 1](#41-system-feature-1)
-    * 4.2 [System Feature 2 (and so on)](#42-system-feature-2-and-so-on)
-  * [Other Nonfunctional Requirements](#other-nonfunctional-requirements)
+  * [System Features](#system-features)
+    * 4.1 [Login](#41-login)
+    * 4.2 [Review Paper](#42-review-paper)
+    * 4.3 [Edit Profile](#43-edit-profile)
+    * 4.4 [To Review](#44-to-review)
+    * 4.5 [Submissions](#45-submissions)
+    * 4.6 [Dashboard](#46-dashboard)
+    * 4.7 [Display all papers](#47-display-all-boards)
+    * 4.8 [Drafts Management](#48-drafts-management)
+  <!--* [Other Nonfunctional Requirements](#other-nonfunctional-requirements)
     * 5.1 [Performance Requirements](#51-performance-requirements)
     * 5.2 [Safety Requirements](#52-safety-requirements)
     * 5.3 [Security Requirements](#53-security-requirements)
     * 5.4 [Software Quality Attributes](#54-software-quality-attributes)
     * 5.5 [Business Rules](#55-business-rules)
   * [Other Requirements](#other-requirements)
-* [Appendix A: Glossary](#appendix-a-glossary)
+<!--* [Appendix A: Glossary](#appendix-a-glossary)
 * [Appendix B: Analysis Models](#appendix-b-analysis-models)
 * [Appendix C: To Be Determined List](#appendix-c-to-be-determined-list)
 
- -->
+ 
 
 <!-- 
 ## Revision History
@@ -83,30 +90,48 @@ Refer to the following links for additional resources:
 
 ## Overall Description
 ### 2.1 Product Overview
-The reviewers page in NITCONF will serve as an interface for the reviewers to mark their review, add comments, feedbacks and ratings to the papers assigned to them by the Programme Committee. The Reveiwers would be provided with a login page where they can login with their credentials. There will be 3 sections under it
-1. To Review  - All the papers that has to be reviewed and submitted to PC would be displayed here along with the deadline. After submission, these papers will go to the Reviewed session.
-2. Reviewed - The papers submitted to PC would be displayed along with the deadlines. The reviewer has the option to edit it and resubmit before the deadline. After deadline these papers will go to history.
-3. History - The history tab will show all the papers reviewed by that reviewer so far with the status and date.
-4. Notifications - All notifications from the PC would be here.
+<!--write about product function -->
+This website simplifies the paper review process for users by providing a user-friendly platform to log in, review assigned papers, and rate them. Users can manage their profiles, including updating review tags, contact information, and bio with ease.
+
+![Flowchart](./flowchart.png "Flowchart")
+
+
+### 2.2 Product Functions
+The reviewers page in NITCONF will serve as an interface for the reviewers to mark their review, add comments, feedbacks and ratings to the papers assigned to them by the Programme Committee. The Reveiwers would be provided with a login page where they can login with their credentials. There will be following sections under it
+1. Edit Profile - Users have the flexibility to update their details, ensuring that their profile remains current and relevant. This includes modifying review tags,name, contact numbers, and bio.
+2. To Review  - All the papers that need to be reviewed and submitted to the PC will be displayed here, along with the deadline. After submission, these papers will move to the submissions section, and if the process is saved without submitting, they will be placed in drafts. 
+3. Drafts - All the paper reviews for which the reviewer has started providing feedback/review but saved their progress to continue later can be seen here.
+4. submissions - All the paper reviews for which feedback has been completed and the reviewer has submitted their reviews can be seen here. This section serves as a history of submitted papers.
 
 
 
-![diag1](https://github.com/afrasd/NITCONF/assets/103187343/e5eede35-4fd2-43b8-9ed8-cf68f1771bb0)
+### 2.3 User Classes and Characteristics
+**1.Reviewer :**    a person who provides feedback/review for papers which he/she is assigned to.
+
+**Characteristics :**
+- **Roles and Responsibilities:** 
+  - Reviewer should view the paper and it's tags and then either accept or decline to review.
+  - if accepted, he is expected to submit the review before the deadline
+
+- **Permissions and Access Levels:** 
+  - Reviewer should be able to give comments to authors through pc, can also put confidential comments to pc 
+  - Reviewer can't have any accesss to author's details who's papers are been assigned to.
+
+- **Preferences and Requirements:** 
+  - easy access to assigned papers as an user friendly UI.
+  - deadline tracking and submission status.
+  - able to accept or decline to review even after accepting once. 
+  - edit and resubmit capabilities available for reviewers.
 
 
-
-
-### 2.2 User Classes and Characteristics
-**User - Reviewer**
-- **Frequency of use**: Reviewers engage with the system intensively during the conference periods.
-- **Functions used**: 
+<!--- **Functions used**: 
 	- **paper review**: reviewers will be able to give the review based on some metrics such as originality, relevance, quality, readability, technical soundness etc, additionally they would be able to give a confidence rating. finally they can accept/reject the paper or click on another option called revise. After finalizing the changes they can submit the review to the PC. 
 	- **Commenting and Feedback**: They provide detailed comments and feedback for each paper, which may include critiques, suggestions for improvement, and overall assessments.
 - **Technical Expertise**: A simple understanding of basic computer based tasks is enough to navigate the system as it is user friendly.
 - ** Security Levels**: Reviewers require secure login credentials to login in to the system, this is done to ensure the integrity and confidentiality of the reviewing process.
-- **Educational Level and Experience**: They possess significant expertise in their respective academic or industry fields. They must also have experience in the reviewing process which would enable them to critique better and provide some insightful comments.
+- **Educational Level and Experience**: They possess significant expertise in their respective academic or industry fields. They must also have experience in the reviewing process which would enable them to critique better and provide some insightful comments. -->
 
-**Pertinent Requirements**
+<!--**Pertinent Requirements**
 - easy access to assigned papers because of the user friendly UI.
 	- divided into two sections : to review and review
 - deadline tracking and submission status.
@@ -115,10 +140,10 @@ The reviewers page in NITCONF will serve as an interface for the reviewers to ma
 - decline to review.
  	- this option would be provided to the reviewer if they wish to decline to give a review.
 - edit and resubmit capabilities available for reviewers.
-- confidentiality and anonymity between reviewers and the authors of the paper by enforcing a double blind situation.
+- confidentiality and anonymity between reviewers and the authors of the paper by enforcing a double blind situation.-->
 
-### 2.3 Operating Environment
-**General requirements**: NITCONF designed to be lightweight and accessible on platforms such as desktop computers and laptops.
+### 2.4 Operating Environment
+<!--**General requirements**: NITCONF designed to be lightweight and accessible on platforms such as desktop computers and laptops.
 -**Performance Specification**: for optimal performance any modern processor, at least 8gb of ram and a stable internet connection re recommended for laptop and desktop users.
 -**Cross platform compatibility** irrespective of the OS , this application (NITCONF) can run smoothly.
 
@@ -145,9 +170,14 @@ The reviewers page in NITCONF will serve as an interface for the reviewers to ma
 Containerization: The application is containerized using Docker, Kubernetes.
 API testing tools: Postman, swagger.io, SoapUI.
 CI/CD Pipelines: Integration with continuous integration and continuous deployment tools.
+-->
+The software will operate in a web-based environment.
 
+- Hardware Platform: The system should be compatible with standard web browsers on various devices.
+- Operating System: Compatible with major operating systems like Windows, macOS, Android, iOS and Linux.
+- Software Components: The system should coexist peacefully with common web technologies 
 
-### 2.4 Design and Implementation Constraints
+### 2.5 Design and Implementation Constraints
 - **Security Concerns**: Risks of unauthorized access and data breaches.
 - **User Authentication and Authorization**: Potential issues in login processes and user permission management.
 - **User Experience (UX)**:Possible usability issues impacting user satisfaction.
@@ -157,8 +187,8 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
 - **Review Workflow**: Inefficiencies or confusion in the paper review process.
 - **Backup and Recovery**: Potential data loss without regular backups and recovery plan.
 
-### 2.5 User Documentation
-#### Login and Dashboard Navigation
+### 2.6 User Documentation
+<!--#### Login and Dashboard Navigation
 - **Login**: Reviewers log in with their credentials and are directed to the reviewer dashboard.
 - **Profile**: The user's profile icon is displayed in the top right corner, linking to the profile page.
 - **homepage**: contains links/buttons to the following options:
@@ -177,8 +207,7 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
   5. **Deadline**: Lists the review deadline set by the Program Committee.
   6. **Decline**: A button that can be pressed if the reviewer chooses not to review that paper.
      
- 
-     ![1](https://github.com/afrasd/NITCONF/assets/103187343/4a1f5693-12b0-46d3-b598-0eaae21ff74e)
+
 
 
 ### 'Reviewed' Page
@@ -189,7 +218,6 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
   3. **Status**: The final status of the paper (Accept/Reject).
   4. **Revision**: Shows the revision round of the paper (e.g., first, second).
   5. **Deadline**: The review deadline, after which the paper is removed from this page.
- ![2](https://github.com/afrasd/NITCONF/assets/103187343/3c86a087-d8ae-4a67-85b0-adbc787777c6)
 
   
   
@@ -201,29 +229,26 @@ CI/CD Pipelines: Integration with continuous integration and continuous deployme
   3. **Status**: The final status of the paper (Accept/Reject).
   4. **Revision**: Shows the revision round of the paper (e.g., first, second).
   5. **Deadline**: The review deadline, after which the paper is removed from this page.
+-->
+User documentation components will include:
 
-     
- ![3](https://github.com/afrasd/NITCONF/assets/103187343/6a0ac50c-11a8-41f3-9a9b-7fae0e3a2c41)
-
-     
-
-### 'Notifications' Page
-- **Content**: Lists all notifications from PC, like paper assignments and deadline reminders.
+- User manuals for reviewers.
+- On-line help resources to meet the strandard review conventions.
+- Tutorials guiding reviewers through the review process.
   
-  
-### 2.6 Assumptions and Dependencies
-## Assumptions:
+### 2.7 Assumptions and Dependencies
+**Assumptions:**
 - **Third-Party Components**: Assuming the availability and reliability of third-party libraries or frameworks used in the development of the website.
 - **Internet Connectivity**: Assuming that users and reviewers have consistent internet access for seamless interaction with the platform.
 - **Browser Compatibility**: Assuming standard browser compatibility for optimal user experience.
 - **User Cooperation**: Assuming users will follow proper guidelines for paper submissions and reviews.
 - **Work Flow**: Assigned by the program committee, reviewers submit their evaluations, and the committee provides the final response to authors. All communication between reviewers and authors is facilitated through the program committee for efficiency and coherence.
 
-## Dependencies:
-- **External APIs**:Dependency on external APIs for features like user authentication or data retrieval.
-- **Database System**:Dependency on the chosen database system for storing and retrieving paper and user data.
-- **Hosting Service**:Dependency on a reliable hosting service for the website to be accessible online.
-- **Development Tools**:Dependency on specific development tools, languages, or frameworks.
+ **Dependencies:**
+- **External APIs**:  external APIs for features like user authentication or data retrieval.
+- **Database System**:  the chosen database system for storing and retrieving paper and user data.
+- **Hosting Service**:  a reliable hosting service for the website to be accessible online.
+- **Development Tools**:  specific development tools, languages, or frameworks.
 
 ## External Interface Requirements
 ### 3.1 User Interfaces
@@ -264,27 +289,73 @@ Within each submission, the user interface allows reviewers to access abstracts,
 
    - Review Feedback: Managed by Spring MVC controllers, sending review feedback stored in MYSQL to the frontend.
 
-<!-- ## System Features
-This template illustrates organizing the functional requirements for the product by system features, the major services provided by the product. You may prefer to organize this section by use case, mode of operation, user class, object class, functional hierarchy, or combinations of these, whatever makes the most logical sense for your product.
-### 4.1 System Feature 1
-Don’t really say “System Feature 1.” State the feature name in just a few words.
-4.1.1   Description and Priority
- Provide a short description of the feature and indicate whether it is of High, Medium, or Low priority. You could also include specific priority component ratings, such as benefit, penalty, cost, and risk (each rated on a relative scale from a low of 1 to a high of 9).
-4.1.2   Stimulus/Response Sequences
- List the sequences of user actions and system responses that stimulate the behavior defined for this feature. These will correspond to the dialog elements associated with use cases.
-4.1.3   Functional Requirements
- Itemize the detailed functional requirements associated with this feature. These are the software capabilities that must be present in order for the user to carry out the services provided by the feature, or to execute the use case. Include how the product should respond to anticipated error conditions or invalid inputs. Requirements should be concise, complete, unambiguous, verifiable, and necessary. Use “TBD” as a placeholder to indicate when necessary information is not yet available.
- 
- Each requirement should be uniquely identified with a sequence number or a meaningful tag of some kind.
+## System Features
+The features provided to the user are-
 
-### 4.2 System Feature 2 (and so on)
+**4.1 Login :** provides interface for authentication and acces  
+- priority: very high
+- Functional Requirements:
+  - Users should be able to log in using valid credentials.
+  - The system should securely authenticate users and grant access only to authorized individuals.
+  - Forgotten password functionality should allow users to reset their passwords securely.
+
+**4.2 Review paper :** provides a tool/interface to write reviews .
+- priority: very high
+- Functional Requirements:
+  - user should be able to submit the review wrtiiten here.
+  - user should be able to rate,comment,followstandard review convintions easily.
+
+**4.3 Edit Profile :** provides interface for profile management 
+- priority: high
+- Functional Requirements:
+  - Users should be able to edit and update their profile information.
+  - The system should validate and save changes made to the user's profile.
+  - Profile updates should include details such as review tags, contact numbers, and bio.
+
+
+**4.4  To Review :** provides interface to handle assigned papers for which review has not yet started
+- priority: high
+- Functional Requirements:
+  - Assigned papers to be reviewed should be displayed with relevant details such as title and deadline.
+  - Submission of reviews done through 'review paper' should automatically move papers from here to the submissions section.
+  - reviews drafted through 'review paper' should automatically move papers from here to the Drafts section
+  - useer shpul be able to decline/accept the paper
+
+**4.5 Submissions :** provides interface to handle only submitted reviews
+- priority: medium
+- Functional Requirements:
+  - The system should maintain a history of submitted papers.
+  - Reviewers should be able to view completed reviews and submissions in the 'Submissions' section.
+  - deletion of reviews should automatically move papers from here to the toreview section
+
+**4.6 Dashboard :** provides interface to navigate to different interfaces 
+- priority: medium
+- Functional Requirements:
+  - user should be able to see and navigate each webpage/feature with ease
+
+
+**4.7 Display all papers :** provides interface to handle all the paper reviews 
+- priority: medium
+- Functional Requirements:
+  - user should be able to view and edit(within deadline) all the new , old drafted paper reviews
+
+**4.8 Draft Management :** provides interface to handle only drafted reviews
+- priority: low 
+- Functional Requirements:
+  - Reviewers should be able to save the progress of their reviews without submitting.
+  - The system should provide a 'Drafts' section where reviewers can access and continue working on saved reviews.
+         
 
 
 
 
 
 
-## Other Nonfunctional Requirements
+
+
+
+
+<!--## Other Nonfunctional Requirements
 
 ### 5.1 Performance Requirements
 System is designed to help reviewers review papers assigned to them. It involves the dynamic process of paper-review management with efficiency and precision. Some important functionalities of the reviewer include accepting/rejecting/editing/deleting/declining/accept upon further revision.
@@ -306,9 +377,9 @@ List any operating principles about the product, such as which individuals or ro
 
 ## Other Requirements
 Define any other requirements not covered elsewhere in the SRS. This might include database requirements, internationalization requirements, legal requirements, reuse objectives for the project, and so on. Add any new sections that are pertinent to the project.
-### Appendix A: Glossary
+<!--### Appendix A: Glossary
 Define all the terms necessary to properly interpret the SRS, including acronyms and abbreviations. You may wish to build a separate glossary that spans multiple projects or the entire organization, and just include terms specific to a single project in each SRS.
 ### Appendix B: Analysis Models
 Optionally, include any pertinent analysis models, such as data flow diagrams, class diagrams, state-transition diagrams, or entity-relationship diagrams.
 ### Appendix C: To Be Determined List
-Collect a numbered list of the TBD (to be determined) references that remain in the SRS so they can be tracked to closure. -->
+Collect a numbered list of the TBD (to be determined) references that remain in the SRS so they can be tracked to closure. --->

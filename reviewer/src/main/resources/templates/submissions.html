@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Submissions</title>
+    <!-- Bootstrap CSS link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      
+        body {
+            padding-top: 0;
+        }
+        
+        .submission-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative; /* Added for positioning the button */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+      
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Profile</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
+                            </li>
+                            <br>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign Out
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form method="POST" th:action="@{/logout}">
+                                            <input class="btn" type="submit" value="Logout" />
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+    </header>
+
+       <div class="text-center">
+		    <h1>Submissions</h1>
+	   </div>
+	   
+	   <br><br>
+    
+    <div class="container-lg">
+        <div class="submission-item" >
+            <div class="col-5">
+				<p class="h5">Paper 1</p>
+			</div> 
+            
+            <p>Submitted on: January 17, 2023</p> 
+            <p>Deadline: [Your Deadline]</p>
+            
+            <div class="col-4" > 
+				
+				<div class="btn-group">
+					  <button class="btn btn-secondary btn-lg" type="button">
+					    actions
+					  </button>
+					  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+					    <span class="visually-hidden">Toggle Dropdown</span>
+					  </button>
+					  <ul class="dropdown-menu">
+						    <li><a class="dropdown-item" href="#">view paper</a></li>
+						    <li><a class="dropdown-item" href="#">view review</a></li>
+						    <li><a class="dropdown-item" href="#">edit review</a></li>
+						    <li><hr class="dropdown-divider"></li>
+						    <li> <button type="button" class="btn btn-outline-danger">delete submission</button> </li>
+						  </ul>
+				</div>
+                   
+            </div>  
+            
+        </div>
+      </div>
+        
+
+        <!-- Add more submission items as needed -->
+    
+
+    <!-- Bootstrap JS and Popper.js scripts (required for Bootstrap components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+     
+     
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var submissionItems = document.querySelectorAll('.submission-item');
+
+            submissionItems.forEach(function (item) {
+                item.addEventListener('click', function () {
+                    this.querySelector('.details-container').classList.toggle('show');
+                });
+            });
+        });
+    </script>
+     
+     
+     
+</body>
+
+</html>
