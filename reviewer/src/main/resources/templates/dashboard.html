@@ -32,10 +32,11 @@
 	      <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
           <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
+            <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
               <span class="navbar-toggler-icon"></span>
             </button>
-
+            
             <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Profile</h5>
@@ -80,8 +81,6 @@
             <div class="card">
                 <img th:src="@{/images/toreview.png}" class="card-img-top">
                 <div class="card-body">
-                    
-                    
                     <a th:href="@{/to-review}" class="btn btn-primary w-100 d-block">ToReview</a>
                 </div>
             </div>
