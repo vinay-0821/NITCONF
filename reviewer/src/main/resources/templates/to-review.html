@@ -46,7 +46,7 @@
             </div>
           </div>
         </nav>
-     </header> 
+</header> 
 
 		
 		<main>
@@ -71,6 +71,44 @@
 							<p class="h6 font-weight-normal">Actions</p>
 						</div>
 				   </div>
+				   
+				   
+				   <div class="row" >
+						<div class="col-md-1 border py-2">
+							<p class="d-inline">#</p> <p class="h6 d-inline">1</p>
+						</div>
+						<div class="col-md-6 border py-2">
+							<p class="h6 font-weight-normal" >sample paper 1
+							</p>
+							<br>
+							<a th:href="@{/file/{path}(path=${paper.pdfLink})}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
+						    <div class="dropdown d-inline">
+							 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							   View Tags
+							  </button>
+							  <ul class="dropdown-menu bg-light">
+								<li> <p> sample tag 1</p>  </li>
+							    <li> <p> sample tag 2</p>  </li>
+							    <li th:each="tag : ${paper.tags}" th:text="${tag.name}" class="px-3">Action</li>
+							  </ul>
+							</div>
+	
+						</div>
+						<div class="col-md-3 border py-2 text-center">
+							<p class="h6 font-weight-normal" >06/02/2024</p>
+						</div>
+						
+						<div class="col-md border py-2">
+							<a><button class="btn btn-primary m-1">Review</button></a>
+						    <a><button class="btn btn-danger m-1">Decline</button></a>
+
+						</div>
+				   </div>
+				   
+				   
+				   
+				   
+				   
 				   	<div class="row" th:each="paper : ${papers}">
 						<div class="col-md-1 border py-2">
 							<p class="d-inline">#</p> <p class="h6 d-inline" th:text="${paper.id}"></p>
