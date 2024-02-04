@@ -45,12 +45,12 @@ public class ToReviewController {
 		System.out.println(user.toString());
 		 //TODO check status for the papers while adding in list
 		
-		ArrayList<Paper> papers = new ArrayList<Paper>();
-		for(Paper paper : user.getPaper())
-		{
-			papers.add(paperRepository.findPaperById(paper.getId()));
-		}
-		model.addAttribute("papers", papers);
+//		ArrayList<Paper> papers = new ArrayList<Paper>();
+//		for(Paper paper : user.getPaper())
+//		{
+//			papers.add(paperRepository.findPaperById(paper.getId()));
+//		}
+//		model.addAttribute("papers", papers);
 		return "to-review";
 	}
 	

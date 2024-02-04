@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 
-//@Data   data annotation is not creating getters and setters  
+
 @Entity
 @Table(name="tags")
 public class Tags {
