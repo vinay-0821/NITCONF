@@ -41,7 +41,7 @@ public class SecurityConfig{
 	
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {     //need to understand 
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {   
 		http
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/", "/home").permitAll()

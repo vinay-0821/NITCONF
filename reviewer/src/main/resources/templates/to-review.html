@@ -125,7 +125,7 @@
 				   
 				   	<div class="row" th:each="paper : ${papers}">
 						<div class="col-md-1 border py-2">
-							<p class="d-inline">#</p> <p class="h6 d-inline" th:text="${paper.id}"></p>
+							<p class="d-inline">#</p> <p class="h6 d-inline" type="number" th:text="${paper.id}"></p>
 						</div>
 						<div class="col-md-6 border py-2">
 							<p class="h6 font-weight-normal" th:text="${paper.name}">
@@ -147,24 +147,9 @@
 						</div>
 						
 						<div class="col-md border py-2">
-							
-							<div class="btn-group mx-4 my-3">
-									  <button class="btn btn-secondary btn-lg" type="button">
-									    actions
-									  </button>
-									  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-									    <span class="visually-hidden">Toggle Dropdown</span>
-									  </button>
-									  <ul class="dropdown-menu">
-										   <!-- <li><a class="dropdown-item" href="#">View paper</a></li>
-										    <li><a class="dropdown-item" href="#">view review</a></li> -->
-										    <li><a class="dropdown-item" href="#">Review</a></li>
-										    <li><hr class="dropdown-divider"></li>
-											<li class="delete"><a class="dropdown-item text-danger"  href="#">Decline</a></li>
-										   
-									  </ul>
-				            </div> 
-				            
+	              <a th:href="@{/review(id=${paper.id})}"><button class="btn btn-primary m-1">Review</button></a>
+						    <a><button class="btn btn-danger m-1">Decline</button></a>
+
 						</div>
 				   </div>
 
