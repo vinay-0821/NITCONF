@@ -7,7 +7,40 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         body {
-            padding-top: 0;
+            display: absolute;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        
+        .min-width-rem{
+			min-width:7rem;
+		}
+        
+        
+
+        .container-main {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            flex: 0 0 280px;
+            background-color: #343a40;
+            color: white;
+            position: fixed;
+            margin-top: 55px;
+            height: 93%;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            width: 100%;
+        }
+
+        .container {
+            margin-top: 60px;
+            margin-left: 280px;
         }
 
         .card-container {
@@ -20,83 +53,133 @@
         .card {
             width: 18rem;
         }
-        .container {
-        margin-top: 60px; /* Adjust the top margin to create a gap */
-         }
+
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 
 <body>
 
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
+        <a th:href="@{/allpapers}" class="nav-link text-white active">
+            All Papers
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <a th:href="@{/to-review}" class="nav-link text-white">
+                    ToReview
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/drafts}" class="nav-link text-white">
+                    Drafts
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/submissions}" class="nav-link text-white">
+                    Submissions
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <header>
-	      <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
-          <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Profile</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
-                  </li>
+        <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
 
-    
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       Sign Out
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-						  <form method="POST" th:action="@{/logout}">
-                               <input class="btn" type="submit" value="Logout"/>
-                          </form>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+               <!-- <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Profile</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign Out
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form method="POST" th:action="@{/logout}">
+                                            <input class="btn" type="submit" value="Logout"/>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>-->
+                
+           <div class="dropdown px-2">
+            <a th:href="@{/profile}" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+					  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+					  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+					</svg>
+                <strong class="ms-2">profile</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow py-2 min-width-rem" aria-labelledby="dropdownUser1">
+                <li class="nav-item pt-2 px-2">
+                                <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
+                            </li>
+                
+                                    <li class="nav-item pt-2 px-2">
+                                        <form method="POST" th:action="@{/logout}">
+                                            <input class="btn text-danger" type="submit" value="Logout"/>
+                                        </form>
+                                    </li>
+                                </ul>
+                            
             
-              </div>
+        </div>
+                
             </div>
-          </div>
         </nav>
-      </header> 
+    </header>
 
-
-    <div class="container">
-		
-		<div class="text-center">
-			<h1>DashBoard</h1>
-		</div>
-		<br>
-		<br>
-        <div class="card-container">
-            <div class="card">
-                <img th:src="@{/images/toreview.png}" class="card-img-top">
-                <div class="card-body">
-                    <a th:href="@{/to-review}" class="btn btn-primary w-100 d-block">ToReview</a>
-                </div>
+    <div class="container-main">
+        <div class="container">
+            <div class="text-center">
+                <h1>DashBoard</h1>
             </div>
-            <div class="card">
-                <img th:src="@{/images/drafts.png}" class="card-img-top">
-                <div class="card-body">
-                    
-                   <a th:href="@{/drafts}" class="btn btn-secondary w-100 d-block">Drafts</a>
+            <br>
+            <br>
+            <div class="card-container">
+                <div class="card">
+                    <img th:src="@{/images/toreview.png}" class="card-img-top">
+                    <div class="card-body">
+                        <a th:href="@{/to-review}" class="btn btn-primary w-100 d-block">ToReview</a>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <img th:src="@{/images/submissions.png}" class="card-img-top">
-                <div class="card-body">
-                    
-                    
-                    <a th:href="@{/submissions}" class="btn btn-success w-100 d-block">Submissions</a>
+                <div class="card">
+                    <img th:src="@{/images/drafts.png}" class="card-img-top">
+                    <div class="card-body">
+                        <a th:href="@{/drafts}" class="btn btn-secondary w-100 d-block">Drafts</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img th:src="@{/images/submissions.png}" class="card-img-top">
+                    <div class="card-body">
+                        <a th:href="@{/submissions}" class="btn btn-success w-100 d-block">Submissions</a>
+                    </div>
                 </div>
             </div>
         </div>
