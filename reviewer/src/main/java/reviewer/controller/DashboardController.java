@@ -34,13 +34,13 @@ public class DashboardController {
 	
 	
 	@GetMapping
-	public String dashboard(Principal principal,Model model,HttpSession session)
+	public String dashboard(Principal principal,Model model,HttpSession session)   //?
 	{
 	
 		//returns optional class
 		User user = userRepository.findById(userRepository.findUserByUsername(principal.getName()).getUsername()).get();
 		model.addAttribute("user", user);
-		System.out.println(user.toString());
+	    System.out.println(user.toString());
 		return "dashboard";
 	}
 	

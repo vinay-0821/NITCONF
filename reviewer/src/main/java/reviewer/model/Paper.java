@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
@@ -24,11 +25,59 @@ public class Paper {
 	private String pdfLink;
 	private LocalDateTime deadline;
 	
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.EAGER)
     private List<Tags> tags = new ArrayList<>();
 	
 	@OneToMany(mappedBy= "paper")
 	private List<Review> review;                        //change to set?
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPdfLink() {
+		return pdfLink;
+	}
+
+	public void setPdfLink(String pdfLink) {
+		this.pdfLink = pdfLink;
+	}
+
+	public LocalDateTime getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(LocalDateTime deadline) {
+		this.deadline = deadline;
+	}
+
+	public List<Tags> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tags> tags) {
+		this.tags = tags;
+	}
+
+	public List<Review> getReview() {
+		return review;
+	}
+
+	public void setReview(List<Review> review) {
+		this.review = review;
+	}
 	
 	
 

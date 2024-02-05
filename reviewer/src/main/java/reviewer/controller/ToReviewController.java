@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import reviewer.data.PaperRepository;
+import reviewer.data.ReviewRepository;
 import reviewer.model.Paper;
+import reviewer.model.Review;
 import reviewer.model.Tags;
 import reviewer.model.User;
 
@@ -23,7 +24,7 @@ public class ToReviewController {
 	
 	
 	@Autowired
-	PaperRepository paperRepository;
+	ReviewRepository reviewRepo;
 	
 	@ModelAttribute("paper")
 	public Paper paper()
@@ -38,19 +39,48 @@ public class ToReviewController {
 	}
 	
 	
+	@ModelAttribute("review")
+	public Review review()
+	{
+		return new Review();
+	}
+	
+	
+	
+	
 	@GetMapping
 	public String toReview(@ModelAttribute User user , Model model)
 	{
 		
-		System.out.println(user.toString());
-		 //TODO check status for the papers while adding in list
+//		System.out.println(user.toString());
 		
-//		ArrayList<Paper> papers = new ArrayList<Paper>();
-//		for(Paper paper : user.getPaper())
+		ArrayList<Review> reviewList = new ArrayList<Review>();
+		reviewList= reviewRepo.findAllByIdUserId(user.getUsername());
+	
+//		for(Review review : reviewList)
 //		{
-//			papers.add(paperRepository.findPaperById(paper.getId()));
+//			System.out.println(review.toString()); 
+//			System.out.println(review.getPaper().getId()); 
+//
+//			
 //		}
-//		model.addAttribute("papers", papers);
+		
+//		ArrayList<Review> draftList = new ArrayList<Review>();
+//		draftList = reviewRepo.findAllByIdUserIdAndReviewStatus(user.getUsername(),"draft");
+//		
+//		
+//		
+//		for(Review review : draftList)
+//		{
+//			System.out.println(review.toString()); 
+//			System.out.println(review.getPaper().getId()); 
+//
+//			
+//		}
+//		
+		
+		
+		model.addAttribute("reviewList", reviewList);
 		return "to-review";
 	}
 	
