@@ -85,7 +85,7 @@
 							    <div class="form-check">
 							        <div th:each="tag : ${tags}">
 							            <input class="form-check-input" type="checkbox" th:value="${tag.name}" th:field="${selectedTags.selectedTags}" />
-							            <label class="form-check-label" th:for="${'tag_' + tag.name}" th:text="${tag.name}"></label>
+							            <label class="form-check-label" th:for="${'tag_' + tag.name}" th:text="${tag.name}"></label>       <!--modify -->
 							        </div>
 							    </div>
 							</div>

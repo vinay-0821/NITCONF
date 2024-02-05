@@ -35,28 +35,62 @@ public class ReviewController {
    
    
    @GetMapping
-	public String getReview(@RequestParam("id") Long paperId,Model model,@ModelAttribute User user)
+	public String getReview(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,Model model,@ModelAttribute User user)
 	{
+	    if(action.equals("view"))
+	    {
+		    Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
+		    model.addAttribute("review",review);
+		    model.addAttribute("reviewForm",new ReviewForm(review));
+//		    System.out.println(review.toString());
+		    
+			return "review";
+	    }
 	    
-	    Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
-	    model.addAttribute("review",review);
-	    model.addAttribute("reviewForm",new ReviewForm(review));
-	    System.out.println(review.toString());
+	    if(action.equals("clear"))
+	    {
+	    	//System.out.println("hi clear");
+	    	 Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
+	    	 review.modifyReview(new ReviewForm());
+	    	 review.setReviewStatus("new");
+	    	 reviewRepo.save(review);
+	    	 return "redirect:/drafts";
+	    }
 	    
-		return "review";
+	    System.out.println("not working");
+		   return "redirect:/error";
+	    
+	    
 	}
    
    
    @PostMapping
-   public String saveReview(@RequestParam("id") Long paperId,@ModelAttribute("reviewForm") ReviewForm reviewForm ,@ModelAttribute("user") User user)
+   public String saveReview(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,@ModelAttribute("reviewForm") ReviewForm reviewForm ,@ModelAttribute("user") User user)
    {
-	   System.out.println(paperId);
-	   System.out.println(reviewForm.toString());
-	   Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
-	   review.modifyReview(reviewForm);
-	   System.out.println(review.toString());
-	   reviewRepo.save(review);
-	   return "redirect:/drafts";
+	   
+	   if(action.equals("update"))
+	   {
+		  // System.out.println(paperId);
+		 //  System.out.println(reviewForm.toString());
+		   Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
+		   review.modifyReview(reviewForm);
+		   review.setReviewStatus("draft");
+		 //  System.out.println(review.toString());
+		   reviewRepo.save(review);
+		   return "redirect:/drafts";
+	   }
+	   
+	   if(action.equals("save"))
+	   {
+		   
+		   //TODO fill the actions
+		   return "redirect:/submissions";
+	   }
+	   
+	   
+	   System.out.println("not working");
+	   return "redirect:/error";
+	  
    }
 
 	
