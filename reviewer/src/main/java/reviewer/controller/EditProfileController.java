@@ -43,11 +43,12 @@ public class EditProfileController {
 	}
 	
 	
-	/**
-	 * 
-	 * @param model
-	 * @return
-	 */
+     /**
+      * Handles the Get Request to "/edit-profile"
+      * 
+      * @param model
+      * @return 
+      */
 	@GetMapping
 	public String editProfile(Model model)
 	{    

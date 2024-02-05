@@ -72,62 +72,9 @@
 						</div>
 				   </div>
 				   
-<<<<<<< Upstream, based on branch 'to-review' of git@github.com:avinashravanam/NITCONF.git
-				   
-				   <div class="row" >
-						<div class="col-md-1 border py-2">
-							<p class="d-inline">#</p> <p class="h6 d-inline">1</p>
-						</div>
-						<div class="col-md-6 border py-2">
-							<p class="h6 font-weight-normal" >sample paper 1
-							</p>
-							<br>
-							<a th:href="@{/file/{path}(path=${paper.pdfLink})}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
-						    <div class="dropdown d-inline">
-							 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							   View Tags
-							  </button>
-							  <ul class="dropdown-menu bg-light">
-								<li> <p> sample tag 1</p>  </li>
-							    <li> <p> sample tag 2</p>  </li>
-							    <li th:each="tag : ${paper.tags}" th:text="${tag.name}" class="px-3">Action</li>
-							  </ul>
-							</div>
-	
-						</div>
-						<div class="col-md-3 border py-2 text-center">
-							<p class="h6 font-weight-normal" >06/02/2024</p>
-						</div>
-						
-						<div class="col-md border py-2">
-							<div class="btn-group mx-4 my-3">
-									  <button class="btn btn-secondary btn-md" type="button">
-									    actions
-									  </button>
-									  <button type="button" class="btn btn-md btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-									    <span class="visually-hidden">Toggle Dropdown</span>
-									  </button>
-									  <ul class="dropdown-menu">
-										   <!-- <li><a class="dropdown-item" href="#">View paper</a></li>
-										    <li><a class="dropdown-item" href="#">view review</a></li> -->
-										    <li><a class="dropdown-item" href="#">Review</a></li>
-										    <li><hr class="dropdown-divider"></li>
-											<li class="delete"><a class="dropdown-item text-danger"  href="#">Decline</a></li>
-										   
-									  </ul>
-				            </div> 
 
-						</div>
-				   </div>
-				   
-				   
-				   
-				   
-				   
-				   	<div class="row" th:each="paper : ${papers}">
-=======
 				   	<div class="row" th:each="review : ${reviewList}">
->>>>>>> e26c30e implmented drafts and toreview
+
 						<div class="col-md-1 border py-2">
 							<p class="d-inline">#</p> <p class="h6 d-inline" type="number" th:text="${review.paper.id}"></p>
 							<br>
@@ -154,11 +101,8 @@
 						</div>
 						
 						<div class="col-md border py-2">
-<<<<<<< Upstream, based on branch 'to-review' of git@github.com:avinashravanam/NITCONF.git
-	              <a th:href="@{/review(id=${paper.id})}"><button class="btn btn-primary m-1">Review</button></a>
-=======
-							<a th:href="@{/review(id=${review.paper.id})}"><button class="btn btn-primary m-1">Review</button></a>
->>>>>>> e26c30e implmented drafts and toreview
+
+							<a th:href="@{/review(action=view,id=${review.paper.id})}"><button class="btn btn-primary m-1">Review</button></a>
 						    <a><button class="btn btn-danger m-1">Decline</button></a>
 
 						</div>
