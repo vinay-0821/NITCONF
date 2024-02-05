@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -29,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 @Table(name="user")
 public class User implements UserDetails{
 	
-
 	private static final long serialVersionUID = 1L;  //what it actually means ?
 	
 	@Id
@@ -39,13 +37,11 @@ public class User implements UserDetails{
 	private String contactno;
 	private String bio;
 	
-	@ManyToMany()
+
+	@ManyToMany(fetch = FetchType.EAGER)
     private List<Tags> tags = new ArrayList<>();
 	
-	@ManyToMany()
-	private List<Paper> paper = new ArrayList<>();
-	
-	@OneToMany()
+	@OneToMany(mappedBy = "user")
 	private List<Review> review = new ArrayList<>();
 	
 	
@@ -59,22 +55,79 @@ public class User implements UserDetails{
 		this.username = username;
 		this.password = password;
 	}
-	
-	public User(String username, String password, String name, String contactno, String bio, List<Tags> tags,List<Paper> paper) {
+	public User(String username, String password, String name, String contactno, String bio, List<Tags> tags,
+			List<Review> review) {
+		super();
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.contactno = contactno;
 		this.bio = bio;
 		this.tags = tags;
-		this.paper = paper;
+		this.review = review;
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", name=" + name + ", contactno=" + contactno
-				+ ", bio=" + bio + ", tags=" + tags + ", paper=" + paper + "]";
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getContactno() {
+		return contactno;
+	}
+
+	public void setContactno(String contactno) {
+		this.contactno = contactno;
+	}
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+
+	public List<Review> getReview() {
+		return review;
+	}
+
+	public void setReview(List<Review> review) {
+		this.review = review;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void addToTags(Tags tag)
+	{
+		//need to modify delete previous list
+		tags.add(tag);
+		return;
+	}
+	
+	public List<Tags> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tags> tags) {
+		this.tags = tags;
+	}
+
+	public void removeTags() {
+		
+		// TODO Auto-generated method stub
+		tags.clear();
+		
 	}
 
 	
@@ -117,73 +170,10 @@ public class User implements UserDetails{
 		return true;
 	}
 
-	public String getName() {
-		return name;
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", name=" + name + ", contactno=" + contactno
+				+ ", bio=" + bio + ", tags=" + tags + ", review=" + "]";
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getContactno() {
-		return contactno;
-	}
-
-	public void setContactno(String contactno) {
-		this.contactno = contactno;
-	}
-
-	public String getBio() {
-		return bio;
-	}
-
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	
-	
-	public void addToTags(Tags tag)
-	{
-		
-		//need to modify delete previous list
-		tags.add(tag);
-		return;
-	}
-	public List<Tags> getTags() {
-		return tags;
-	}
-
-	public void setTags(List<Tags> tags) {
-		this.tags = tags;
-	}
-
-	public List<Paper> getPaper() {
-		return paper;
-	}
-
-	public void setPaper(List<Paper> paper) {
-		this.paper = paper;
-	}
-
-	public void removeTags() {
-		
-		tags.clear();
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-
-	
-
 
 }

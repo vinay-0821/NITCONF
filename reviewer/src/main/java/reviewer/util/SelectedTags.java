@@ -1,4 +1,4 @@
-package reviewer.model;
+package reviewer.util;
 
 import java.util.ArrayList;
 

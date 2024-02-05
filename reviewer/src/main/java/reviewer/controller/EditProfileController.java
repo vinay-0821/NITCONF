@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import reviewer.data.TagsRepository;
 import reviewer.data.UserRepository;
-import reviewer.model.SelectedTags;
 import reviewer.model.Tags;
 import reviewer.model.User;
+import reviewer.util.SelectedTags;
 
 @Controller
 @RequestMapping("/edit-profile")
@@ -42,28 +42,42 @@ public class EditProfileController {
 		return new SelectedTags();
 	}
 	
+	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping
 	public String editProfile(Model model)
 	{    
 	    ArrayList<Tags> tags = tagsRepository.findAll();
-	    System.out.println(tags.toString());
+	   // System.out.println(tags.toString());
 		model.addAttribute("tags", tags);
 		return "edit-profile";
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @param user
+	 * @param selectedTags
+	 * @return
+	 */
 	@PostMapping
 	public String editProfileform(@ModelAttribute("user") User user,@ModelAttribute("selectedTags") SelectedTags selectedTags)
 	{
-		System.out.println("postman");
+
 		System.out.println(selectedTags.toString());
 		user.removeTags();
 		for(String str : selectedTags.getSelectedTags())
 		{
 			  user.addToTags(tagsRepository.findByName(str));
 		}
-		System.out.println(user.toString());
+//		System.out.println(user.toString());
 		userRepository.save(user);
-		System.out.println("it should be added to database");
+//		System.out.println("it should be added to database");
 		//update database
 		return "profile";
 	}
