@@ -50,15 +50,14 @@
       <main>
 		  <section>
 			  
-			    <p class="h6" th:text=${paper.name}></p>
-			    <p class="h6" th:text=${paper.deadline}></p>
-			    
 			   <div class="container w-50">
-			    <form method="post">
+			    <form method="post" th:action="@{/review(update,id=${review.paper.id})}">
 					<label for="rating"  class="form-label">Rating</label>
-					<input class="form-control w-50 mb-4" min=0 max=10 id="rating" type="number">
-					
-					<input class="btn btn-primary" type="submit" value="Submit">
+						<p th:text="${review.paper.name}"></p>
+		
+					<input class="form-control w-50 mb-4"  min=0 max=10  th:value="${reviewForm.originality}" th:field="${reviewForm.originality}" type="number">
+					<input class="btn btn-secondary" type="submit" value="Save to Draft">
+					<input class="btn btn-success" type="submit" value="Submit">
 				</form>
 			   </div>
 		  </section>
