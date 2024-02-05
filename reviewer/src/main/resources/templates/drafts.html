@@ -1,192 +1,158 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <title>Drafts</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-     
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
+
     <header>
         <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Profile</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
+                
+           <div class="dropdown px-2">
+            <a th:href="@{/profile}" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+					  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+					  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+					</svg>
+                <strong class="ms-2">profile</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow py-2 min-width-rem" aria-labelledby="dropdownUser1">
+                <li class="nav-item pt-2 px-2">
                                 <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
                             </li>
-                            <br>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Sign Out
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
+                
+                                    <li class="nav-item pt-2 px-2">
                                         <form method="POST" th:action="@{/logout}">
-                                            <input class="btn" type="submit" value="Logout" />
+                                            <input class="btn text-danger" type="submit" value="Logout"/>
                                         </form>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
+                            
+            
+        </div>
+                
             </div>
         </nav>
-        
     </header>
 
-       
-     <main>
-          <div class="container text-center my-5">
-			   <h1>Drafts</h1>
-		  </div>
+    <main>
+        <div class="container-fluid overflow-hidden">
+            <div class="row vh-100 overflow-auto">
+				
+                <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
+                    <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
+                        <a th:href="@{/allpapers}" class="nav-link text-white active">
+                            All Papers
+                        </a>
+                        <hr>
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li>
+                                <a th:href="@{/to-review}" class="nav-link text-white">
+                                    ToReview
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/drafts}" class="nav-link text-white">
+                                    Drafts
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/submissions}" class="nav-link text-white">
+                                    Submissions
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-9 col-xl-10 px-2 pt-5">
+                    <div class="container text-center my-5">
+			             <h1>Drafts</h1>
+		            </div>
 		  
-		  <div class="container-md w-60">
-			 <div class="row bg-light bg-gradient">
-				<div class="col-md-1 border text-center  py-2">
-					<p class="h6 font-weight-normal">Paper id</p>
-				</div>
-				<div class="col-md-6 border text-center  py-2">
-					<p class="h6 font-weight-normal">Name</p>
-				</div>
-				<div class="col-md-3 border text-center  py-2">
-					<p class="h6 font-weight-normal">Deadline</p>
-				</div>
-				<div class="col-md border text-center  py-2">
-					<p class="h6 font-weight-normal">Actions</p>
-				</div>
-		    </div>
-          
-    
-			<!-- <div class="row">
-				<div class="col-md-1 border py-2">
-				   <p class="d-inline">#</p> <p class="h6 d-inline" text="1"></p>
-				</div>
-				<div class="col-md-6 border py-2">
-					 <p class="h6 font-weight-normal">temporary file</p>
-					 <br>
-					 <a target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
-				    <div class="dropdown d-inline">
-					  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					   View Tags
-					  </button>
-					  <ul class="dropdown-menu bg-light">
-					    <li class="px-3">Action</li>
-					  </ul>
-					</div>
-				</div>
-				<div class="col-md-3 border py-2 text-center">
-					<p class="h6 font-weight-normal">06/02/2024</p>
-				</div>
-	            <div class="col-md border py-2" > 
-					<div class="btn-group mx-3 my-3">
-						  <button class="btn btn-secondary btn-lg" type="button">
-						    actions
-						  </button>
-						  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-						    <span class="visually-hidden">Toggle Dropdown</span>
-						  </button>
-						  <ul class="dropdown-menu">
-							    
-							    <li><a class="dropdown-item" href="#">continue review</a></li>
-							    <li><a class="dropdown-item" href="#">clear review</a></li>
-							    <li><hr class="dropdown-divider"></li>
-							    <div class="text-center">
-							    <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
-							    </div>
-					       </ul>
-					</div>
-	            </div>  -->
+		            <div class="container-md w-60">
+							 <div class="row bg-light bg-gradient">
+								<div class="col-md-1 border text-center  py-2">
+									<p class="h6 font-weight-normal">Paper id</p>
+								</div>
+								<div class="col-md-6 border text-center  py-2">
+									<p class="h6 font-weight-normal">Name</p>
+								</div>
+								<div class="col-md-3 border text-center  py-2">
+									<p class="h6 font-weight-normal">Deadline</p>
+								</div>
+								<div class="col-md border text-center  py-2">
+									<p class="h6 font-weight-normal">Actions</p>
+								</div>
+						     </div>
 	            
-	            	<div class="row" th:each="review : ${draftList}">
-						<div class="col-md-1 border py-2">
-							<p class="d-inline">#</p> <p class="h6 d-inline" type="number" th:text="${review.paper.id}"></p>
-							<br>
-							<br>
-							<p class="text-danger font-italic" th:if="${review.reviewStatus == 'draft'}">[Draft]<p/>
-						</div>
-						<div class="col-md-6 border py-2">
-							<p class="h6 font-weight-normal" th:text="${review.paper.name}">
-							</p>
-							<br>
-							<a th:href="@{/file/{path}(path=${review.paper.pdfLink})}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
-						    <div class="dropdown d-inline">
-							 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							   View Tags
-							  </button>
-							  <ul class="dropdown-menu bg-light">
-							    <li th:each="tag : ${review.paper.tags}" th:text="${tag.name}" class="p-1">Action</li>
-							  </ul>
-							</div>
-	
-						</div>
-						<div class="col-md-3 border py-2 text-center">
-							<p class="h6 font-weight-normal" th:text="${review.paper.deadline}">06/02/2024</p>
-						</div>
-						
-						 <div class="col-md border py-2" > 
-							<div class="btn-group mx-3 my-3">
-								  <button class="btn btn-secondary btn-lg" type="button">
-								    actions
-								  </button>
-								  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-								    <span class="visually-hidden">Toggle Dropdown</span>
-								  </button>
-								  <ul class="dropdown-menu">
-									    
-									    <li><a class="dropdown-item" th:href="@{/review(id=${review.paper.id})}">continue review</a></li>
-									    <li><a class="dropdown-item" href="#">clear review</a></li>
-									    <li><hr class="dropdown-divider"></li>
-									    <div class="text-center">
-									    <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
-									    </div>
-							       </ul>
-							</div>
-	                     </div>  
-				   </div>
+			                 <div class="row" th:each="review : ${draftList}">
+								<div class="col-md-1 border py-2">
+									<p class="d-inline">#</p> <p class="h6 d-inline" type="number" th:text="${review.paper.id}"></p>
+									<br>
+									<br>
+									<p class="text-danger font-italic" th:if="${review.reviewStatus == 'draft'}">[Draft]<p/>
+								</div>
+								<div class="col-md-6 border py-2">
+									<p class="h6 font-weight-normal" th:text="${review.paper.name}">
+									</p>
+									<br>
+									<a th:href="@{/file/{path}(path=${review.paper.pdfLink})}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
+								    <div class="dropdown d-inline">
+									 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									   View Tags
+									  </button>
+									  <ul class="dropdown-menu bg-light">
+									    <li th:each="tag : ${review.paper.tags}" th:text="${tag.name}" class="p-1">Action</li>
+									  </ul>
+									</div>
+			
+								</div>
+								<div class="col-md-3 border py-2 text-center">
+									<p class="h6 font-weight-normal" th:text="${review.paper.deadline}">06/02/2024</p>
+								</div>
+								
+								 <div class="col-md border py-2" > 
+									<div class="btn-group mx-3 my-3">
+										  <button class="btn btn-secondary btn-lg" type="button">
+										    actions
+										  </button>
+										  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+										    <span class="visually-hidden">Toggle Dropdown</span>
+										  </button>
+										  <ul class="dropdown-menu">
+											    
+											    <li><a class="dropdown-item" th:href="@{/review(id=${review.paper.id})}">continue review</a></li>
+											    <li><a class="dropdown-item" href="#">clear review</a></li>
+											    <li><hr class="dropdown-divider"></li>
+											    <div class="text-center">
+											    <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
+											    </div>
+									       </ul>
+									</div>
+			                     </div>  
+					         </div>
 
-             </div>
+                     </div>
         
-        </div>
+                  </div>
+                </div>
+            </div>
+        </div>        
+    </main>
 
-        	
-     </main>
-        
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-     
-     
-     <!-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var submissionItems = document.querySelectorAll('.submission-item');
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous">
+    </script>
 
-            submissionItems.forEach(function (item) {
-                item.addEventListener('click', function () {
-                    this.querySelector('.details-container').classList.toggle('show');
-                });
-            });
-        });
-    </script> -->
-     
-     
-  
 </body>
 
 </html>
