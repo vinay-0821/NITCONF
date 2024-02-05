@@ -10,9 +10,24 @@ import jakarta.persistence.Embeddable;
 public class ReviewKey implements Serializable{
 
 	
+
 	@Column(name="user_id")
 	private String userId;
 	
 	@Column(name="paper_id")
 	private Long paperId;
+	
+    public ReviewKey(){
+		
+	}
+
+	public ReviewKey(Long paperId, String userId) {
+		
+		this.paperId = paperId;
+		this.userId = userId;
+		
+	}
+	
+	
+
 }

@@ -42,6 +42,12 @@ public class EditProfileController {
 		return new SelectedTags();
 	}
 	
+	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping
 	public String editProfile(Model model)
 	{    
@@ -51,6 +57,14 @@ public class EditProfileController {
 		return "edit-profile";
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @param user
+	 * @param selectedTags
+	 * @return
+	 */
 	@PostMapping
 	public String editProfileform(@ModelAttribute("user") User user,@ModelAttribute("selectedTags") SelectedTags selectedTags)
 	{
