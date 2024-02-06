@@ -14,7 +14,9 @@
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
 
-               <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -65,7 +67,9 @@
             </ul>
                             
             
+
         </div>  -->
+
                 
             </div>
         </nav>
@@ -76,13 +80,19 @@
             <div class="row vh-100 overflow-auto">
                 <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
                     <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
+
+                        <!--<a th:href="@{/dashboard}" class="nav-link text-white active">
+                            Dashboard
+                        </a>-->
+
                        
+
                         <hr>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
                             <li>
                                 <a th:href="@{/to-review}" class="nav-link text-white">
-                                    ToReview
+                                    Review Center
                                 </a>
                             </li>
                             <li>
@@ -106,7 +116,7 @@
 								  <div class="card-body">
 									   <!-- <img th:src="@{/images/toreview.png}" class="card-img-top"> -->
 									   <h5 class="card-title">Review Center</h5>
-									   <p class="card-text">This dedicated space empowers you to manage your paper reviews efficiently. Navigate through your assigned papers, stay informed about deadlines, and ensure a seamless reviewing process. Stay organized, meet your deadlines, and contribute to the academic exchange with ease.</p>
+									   <p class="card-text">Here, you can manage papers for review Navigate through your assigned papers, stay informed about deadlines, and ensure a seamless reviewing process.</p>
 					              </div>
 					              <div class="card p-2 border-0">
 									  <a th:href="@{/to-review}" class="btn btn-primary w-100 d-block">Review Center</a>
