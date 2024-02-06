@@ -21,6 +21,13 @@ public class DraftsController {
 	@Autowired
 	private ReviewRepository reviewRepo;
 	
+	 /**
+     * Retrieves and displays the drafts associated with the logged-in user.
+     * 
+     * @param user  the user object retrieved from the session
+     * @param model the model to which attributes can be added
+     * @return the view name for the "drafts" page which contains the drafts of the user
+     */
 	@GetMapping("/drafts")
 	public String drafts(@ModelAttribute User user,Model model) {
 		

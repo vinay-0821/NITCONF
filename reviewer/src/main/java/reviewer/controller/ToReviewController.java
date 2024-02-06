@@ -46,39 +46,20 @@ public class ToReviewController {
 	}
 	
 	
-	
-	
+	/**
+     * Handles GET requests to display papers available for review associated with current logged-in user.
+     *
+     * @param user  the user object retrieved from the session
+     * @param model the model to which attributes can be added
+     * @return the view name for the "to-review" page
+     */
 	@GetMapping
 	public String toReview(@ModelAttribute User user , Model model)
 	{
 		
-//		System.out.println(user.toString());
-		
+		//TODO search by review_status 
 		ArrayList<Review> reviewList = new ArrayList<Review>();
 		reviewList= reviewRepo.findAllByIdUserId(user.getUsername());
-	
-//		for(Review review : reviewList)
-//		{
-//			System.out.println(review.toString()); 
-//			System.out.println(review.getPaper().getId()); 
-//
-//			
-//		}
-		
-//		ArrayList<Review> draftList = new ArrayList<Review>();
-//		draftList = reviewRepo.findAllByIdUserIdAndReviewStatus(user.getUsername(),"draft");
-//		
-//		
-//		
-//		for(Review review : draftList)
-//		{
-//			System.out.println(review.toString()); 
-//			System.out.println(review.getPaper().getId()); 
-//
-//			
-//		}
-//		
-		
 		
 		model.addAttribute("reviewList", reviewList);
 		return "to-review";
