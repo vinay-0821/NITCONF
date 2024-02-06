@@ -22,6 +22,14 @@ public class ProfileController {
 	{
 		return new Tags();
 	}
+	
+	
+	/**
+     * Displays the user profile page with user information.
+     * The user object is added to session after login.
+     * @param user the user object retrieved from the session 
+     * @return the view name for the "profile" page
+     */
 	@GetMapping
 	public String viewprofile(@SessionAttribute User user)
 	{

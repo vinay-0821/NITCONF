@@ -44,10 +44,10 @@ public class EditProfileController {
 	
 	
      /**
-      * Handles the Get Request to "/edit-profile"
+      * Handles the Get Request to "/edit-profile" and populates the model with available tags.
       * 
       * @param model
-      * @return 
+      * @return the view name for the edit-profile page.It consists the user information who has logged in.
       */
 	@GetMapping
 	public String editProfile(Model model)
@@ -61,10 +61,12 @@ public class EditProfileController {
 	
 	
 	/**
+	 * Handles POST requests to update the user profile based on selected tags and user information
 	 * 
-	 * @param user
-	 * @param selectedTags
-	 * @return
+	 * 
+	 * @param user  the user object with updated profile information
+	 * @param selectedTags  the selected tags associated with the user
+	 * @return the view name for the "profile" page
 	 */
 	@PostMapping
 	public String editProfileform(@ModelAttribute("user") User user,@ModelAttribute("selectedTags") SelectedTags selectedTags)
