@@ -54,15 +54,15 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow py-2 min-width-rem" aria-labelledby="dropdownUser1">
                 <li class="nav-item pt-2 px-2">
-                                <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
-                            </li>
+                    <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
+                </li>
                 
-                                    <li class="nav-item pt-2 px-2">
-                                        <form method="POST" th:action="@{/logout}">
-                                            <input class="btn text-danger" type="submit" value="Logout"/>
-                                        </form>
-                                    </li>
-                                </ul>
+                <li class="nav-item pt-2 px-2">
+                    <form method="POST" th:action="@{/logout}">
+                        <input class="btn text-danger" type="submit" value="Logout"/>
+                    </form>
+                </li>
+            </ul>
                             
             
         </div>-->
@@ -76,9 +76,13 @@
             <div class="row vh-100 overflow-auto">
                 <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
                     <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
+
                         <!--<a th:href="@{/dashboard}" class="nav-link text-white active">
                             Dashboard
                         </a>-->
+
+                       
+
                         <hr>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">

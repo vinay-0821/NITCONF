@@ -76,6 +76,7 @@
     </header>
 
 
+
     <main>
         <div class="container-fluid overflow-hidden">
             <div class="row vh-100 overflow-auto">
@@ -161,10 +162,10 @@
 							            
 							            <div class="col-md border py-2">
 							
-							                <a th:href="@{/review(id=${review.paper.id})}"><button class="btn btn-primary m-1">Review</button></a>
+							                <a th:href="@{/review(action=view,id=${review.paper.id})}"><button class="btn btn-primary m-1">Review</button></a>
+						                  <a><button class="btn btn-danger m-1">Decline</button></a>
 							
-							                <a><button class="btn btn-danger m-1">Decline</button></a>
-							
+
 							            </div>
 							       </div>
 							
@@ -184,6 +185,7 @@
 
 
 </body>
+
 
 </html>
 
