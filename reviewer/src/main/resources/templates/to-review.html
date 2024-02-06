@@ -14,10 +14,40 @@
         <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Profile</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sign Out
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form method="POST" th:action="@{/logout}">
+                                            <input class="btn" type="submit" value="Logout"/>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
 
                 
-           <div class="dropdown px-2">
+          <!-- <div class="dropdown px-2">
             <a th:href="@{/profile}" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 					  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -38,11 +68,13 @@
                                 </ul>
                             
             
-        </div>
+        </div>-->
                 
             </div>
         </nav>
+
     </header>
+
 
     <main>
         <div class="container-fluid overflow-hidden">
@@ -51,7 +83,7 @@
 	                <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
 	                    <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
 	                        <a th:href="@{/allpapers}" class="nav-link text-white active">
-	                            All Papers
+	                            Review Center
 	                        </a>
 	                        <hr>
 	                        <ul class="nav nav-pills flex-column mb-auto">
@@ -78,6 +110,7 @@
                             <div class="container text-center">
 							    <p class="h2 my-4 font-weight-normal">To Review</p>
 							</div>
+
 							
 							 <div class="container justify-content-center">
 							    <div class="container-md w-60">
@@ -96,6 +129,7 @@
 							            </div>
 							        </div>
 							       
+
 
 							           <div class="row" th:each="review : ${reviewList}">
 							
