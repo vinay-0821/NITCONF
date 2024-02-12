@@ -54,6 +54,8 @@ public class Review {
 	@Column(columnDefinition = "varchar(255) default 'accept'")
 	private String reviewerStatus;
 	
+	
+	// values = new , draft , submit
 	@Column(columnDefinition = "varchar(255) default 'new'")
 	private String reviewStatus;
 	
