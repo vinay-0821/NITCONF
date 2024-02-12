@@ -1,6 +1,8 @@
 package reviewer.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -52,16 +54,18 @@ public class Review {
 	@Column(columnDefinition = "varchar(255) default 'accept'")
 	private String reviewerStatus;
 	
+	
+	// values = new , draft , submit
 	@Column(columnDefinition = "varchar(255) default 'new'")
 	private String reviewStatus;
 	
-	
+	@JsonIgnore
 	@ManyToOne 
 	@MapsId("userId")
 	@JoinColumn(name="user_id")
 	User user;
 	
-	
+	@JsonIgnore
 	@ManyToOne 
 	@MapsId("paperId")
 	@JoinColumn(name="paper_id")

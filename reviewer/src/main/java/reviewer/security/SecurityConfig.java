@@ -43,6 +43,7 @@ public class SecurityConfig{
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {   
 		http
+		    .csrf(requests -> requests.disable())
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/", "/home").permitAll()
 				.anyRequest().authenticated()
@@ -50,7 +51,7 @@ public class SecurityConfig{
 			.formLogin((form) -> form
 				.loginPage("/login")
 				.permitAll()
-				.defaultSuccessUrl("/dashboard", true)
+				.defaultSuccessUrl("/dashboard")
 			)
 			.logout((logout) -> logout.permitAll());
 

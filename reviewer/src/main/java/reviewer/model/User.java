@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -41,7 +43,8 @@ public class User implements UserDetails{
 	@ManyToMany(fetch = FetchType.EAGER)
     private List<Tags> tags = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private List<Review> review = new ArrayList<>();
 	
 	

@@ -29,7 +29,7 @@ public class Paper {
     private List<Tags> tags = new ArrayList<>();
 	
 	@OneToMany(mappedBy= "paper")
-	private List<Review> review;                        //change to set?
+	private List<Review> review;                           //change to set?
 
 	public Long getId() {
 		return id;
