@@ -1,5 +1,8 @@
 package reviewer.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 import reviewer.model.User;
 import reviewer.util.ReviewForm;
@@ -17,18 +21,24 @@ import reviewer.util.ReviewKey;
 
 @Controller
 @RequestMapping("/submissions")
-@SessionAttributes("user")
+@SessionAttributes(("user"))
 public class SubmissionsController {
 	
+	
+	@Autowired
+	private ReviewRepository reviewRepo;
 	
 	 /**
      * Handles GET requests to display the submissions page.
      *
      * @return the view name for the "submissions" page
      */
-	@GetMapping()
-	public String submission()
+	@GetMapping("/submissions")
+	public String submission(@ModelAttribute User user,Model model)
 	{
+		ArrayList<Review> SubmissionList = new ArrayList<Review>();
+     	SubmissionList = reviewRepo.findAllByIdUserIdAndReviewStatus(user.getUsername(),"submit");
+	    model.addAttribute("SubmissionList", SubmissionList);
 		return "submissions";
 	}
 	
@@ -76,6 +86,16 @@ public class SubmissionsController {
 		   
 		  return "submission";
 	   }
+
+
+	public ReviewRepository getReviewRepo() {
+		return reviewRepo;
+	}
+
+
+	public void setReviewRepo(ReviewRepository reviewRepo) {
+		this.reviewRepo = reviewRepo;
+	}
 
 	   
    
