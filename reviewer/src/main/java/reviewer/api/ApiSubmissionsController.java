@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import io.swagger.v3.oas.annotations.Operation;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 import reviewer.model.User;
@@ -27,6 +28,12 @@ public class ApiSubmissionsController {
 	private ReviewRepository reviewRepo;
 	
 	@GetMapping
+	@Operation(
+			tags= {"drafts and submissions"},
+			operationId = " ",
+			summary = " list submissions",
+			description = " displays all the submissions done by the provided user in past upto present"
+		)
 	public ResponseEntity<ArrayList<Review>> submission(String username)
 	{
 		ArrayList<Review> SubmissionList = new ArrayList<Review>();

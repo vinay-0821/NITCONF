@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 
@@ -26,6 +28,12 @@ public class ApiDraftController {
      * @return the view name for the "drafts" page which contains the drafts of the user
      */
 	@GetMapping
+	@Operation(
+			tags= {"drafts and submissions"},
+			operationId = " ",
+			summary = " find drafts",
+			description = " search drafts there for username provided and display them"
+		)
 	public Iterable<Review> drafts(@RequestParam("username") String username) 
 	{
 		ArrayList<Review> draftList = new ArrayList<Review>();

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import reviewer.data.TagsRepository;
 import reviewer.data.UserRepository;
 import reviewer.model.Tags;
@@ -30,6 +31,12 @@ public class ApiEditProfileController {
 	
 	
 	@GetMapping("/all-tags")
+	@Operation(
+		tags= {"navigation and profile"},
+		operationId = "id1",
+		summary = " display tags",
+		description = " shows all the tags that are present now "
+	)
 	public Iterable<Tags> getAllTags()
 	{
 		ArrayList<Tags> tags = tagsRepo.findAll();
@@ -37,6 +44,12 @@ public class ApiEditProfileController {
 	}
 	
 	@GetMapping
+	@Operation(
+			tags= {"navigation and profile"},
+			operationId = " ",
+			summary = "find user",
+			description = " search user and display his/her details about bio,tags,contact,ect.."
+	)
 	public User getUser(@RequestParam("username")String username)
 	{
 		Optional<User> optUser = userRepo.findById(username);

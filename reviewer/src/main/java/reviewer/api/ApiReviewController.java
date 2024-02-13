@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import io.swagger.v3.oas.annotations.Operation;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 import reviewer.util.ReviewForm;
@@ -30,6 +31,12 @@ public class ApiReviewController {
 	 
 	 
 	    @GetMapping
+	    @Operation(
+	    		tags= {"give review "},
+	    		operationId = " ",
+	    		summary = " search review",
+	    		description = " find the asked review and show it "
+	    	)
 		public ResponseEntity<Review> getReview(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,@RequestParam("username")String username)
 		{
 		  
@@ -62,6 +69,12 @@ public class ApiReviewController {
 
 	    
 	    @PostMapping
+	    @Operation(
+	    		tags= {"paper reviews"},
+	    		operationId = " ",
+	    		summary = " save review ",
+	    		description = " saves the current progress in review "
+	    	)
 	    public ResponseEntity<Review> saveReview(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,@RequestParam("username")String username, @RequestBody ReviewForm reviewForm )
 	    {
              Optional<Review> optReview = reviewRepo.findById(new ReviewKey(paperId,username));
