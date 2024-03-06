@@ -1,4 +1,4 @@
-package reviewer.controller;
+package reviewer.nonrest;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class SubmissionsController {
      *
      * @return the view name for the "submissions" page
      */
-	@GetMapping("/submissions")
+	@GetMapping()
 	public String submission(@ModelAttribute User user,Model model)
 	{
 		ArrayList<Review> SubmissionList = new ArrayList<Review>();

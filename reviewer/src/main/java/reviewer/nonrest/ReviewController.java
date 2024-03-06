@@ -1,4 +1,4 @@
-package reviewer.controller;
+package reviewer.nonrest;
 
 import java.util.Optional;
 
@@ -53,7 +53,7 @@ public class ReviewController {
 	    {
 		    Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
 		    model.addAttribute("review",review);
-		    model.addAttribute("reviewForm",new ReviewForm(review));
+		   // model.addAttribute("reviewForm",new ReviewForm(review));
 //		    System.out.println(review.toString());
 		    
 			return "review";
@@ -63,8 +63,8 @@ public class ReviewController {
 	    {
 	    	//System.out.println("hi clear");
 	    	 Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
-	    	 review.modifyReview(new ReviewForm());
-	    	 review.setReviewStatus("new");
+//	    	 review.modifyReview(new ReviewForm());
+//	    	 review.setReviewStatus("new");
 	    	 reviewRepo.save(review);
 	    	 return "redirect:/drafts";
 	    }
@@ -99,8 +99,8 @@ public class ReviewController {
 		  // System.out.println(paperId);
 		 //  System.out.println(reviewForm.toString());
 		   Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
-		   review.modifyReview(reviewForm);
-		   review.setReviewStatus("draft");
+//		   review.modifyReview(reviewForm);
+//		   review.setReviewStatus("draft");
 		 //  System.out.println(review.toString());
 		   reviewRepo.save(review);
 		   return "redirect:/drafts";
