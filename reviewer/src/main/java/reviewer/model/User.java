@@ -25,8 +25,9 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
-//@NoArgsConstructor
-//@RequiredArgsConstructor       //why we actually need them
+
+// @NoArgsConstructor
+// @RequiredArgsConstructor       //why we actually need them
 @Table(name="user")
 public class User implements UserDetails{
 	
