@@ -25,7 +25,7 @@ public class Paper {
 	private String pdfLink;
 	private LocalDateTime deadline;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)             // modified to lazy form eager
     private List<Tags> tags = new ArrayList<>();
 	
 	@OneToMany(mappedBy= "paper")

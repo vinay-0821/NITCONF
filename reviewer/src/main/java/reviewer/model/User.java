@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
+
 // @NoArgsConstructor
 // @RequiredArgsConstructor       //why we actually need them
 @Table(name="user")
@@ -40,11 +41,11 @@ public class User implements UserDetails{
 	private String bio;
 	
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)                     // modified to lazy form eager
     private List<Tags> tags = new ArrayList<>();
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user",fetch = FetchType.LAZY)   // modified to lazy form eager
 	private List<Review> review = new ArrayList<>();
 	
 	
@@ -58,6 +59,8 @@ public class User implements UserDetails{
 		this.username = username;
 		this.password = password;
 	}
+	
+	
 	public User(String username, String password, String name, String contactno, String bio, List<Tags> tags,
 			List<Review> review) {
 		super();

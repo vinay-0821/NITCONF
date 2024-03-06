@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 import reviewer.model.User;
@@ -29,10 +30,11 @@ public class ApiSubmissionsController {
 	
 	@GetMapping
 	@Operation(
-			tags= {"drafts and submissions"},
-			operationId = " ",
-			summary = " list submissions",
-			description = " displays all the submissions done by the provided user in past upto present"
+		    tags = {"Drafts and Submissions"},
+		    operationId = "listSubmissions",
+		    summary = "List submissions",
+		    description = "Display all submissions made by the provided user from the past up to the present.",
+		    parameters = @Parameter(name="username" ,description = "The username of the user to retrieve submissions for." , example="jonny")
 		)
 	public ResponseEntity<ArrayList<Review>> submission(String username)
 	{
@@ -43,7 +45,7 @@ public class ApiSubmissionsController {
 	}
 	
 	
-	public String getSubmission(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,Model model,@ModelAttribute User user)
+	public String getSubmission(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId)
 	{
 		
 		//TODO implement the feature

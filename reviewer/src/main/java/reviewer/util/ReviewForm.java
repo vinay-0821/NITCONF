@@ -20,20 +20,11 @@ public class ReviewForm {
 		
 	}
 
-	public ReviewForm(Review review) {
-		 
-		this.originality = review.getOriginality();
-		this.technical = review.getTechnical();
-		this.significance = review.getSignificance();
-		this.originality  = review.getOriginality();
-		this.appropriate = review.getAppropriate();
-		this.organization = review.getOrganization();
-		this.style = review.getStyle();
-		this.refeersConfidence = review.getRefeersConfidence();
-		this.overall  = review.getOverall();
-		this.comment   = review.getComment();
-		
-	}
+//	public ReviewForm(Review review) {
+//		 
+//		
+//		
+//	}
 
 	public Integer getTechnical() {
 		return technical;
