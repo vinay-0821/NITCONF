@@ -1,4 +1,4 @@
-package reviewer.controller;
+package reviewer.nonrest;
 
 import java.util.ArrayList;
 

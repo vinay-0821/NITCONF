@@ -1,4 +1,4 @@
-package reviewer.api;
+package reviewer.rest;
 
 
 import java.util.Optional;
