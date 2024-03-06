@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 
@@ -23,10 +24,11 @@ public class ApiToReviewController {
 	
 	@GetMapping
 	@Operation(
-			tags= {"papers yet to review"},
-			operationId = " ",
-			summary = " find papers",
-			description = " search papers assigned to user which are yet to be reviewd and display if present"
+		    tags = {"Papers Yet to Review"},
+		    operationId = "findPapers",
+		    summary = "Find Papers",
+		    description = "Search for papers assigned to a user which are yet to be reviewed and display if present.",
+		    parameters = @Parameter(name="username" ,description = "The username of the user for whom papers are to be searched." , example="jonny")
 		)
 	public Iterable<Review> toReview(@RequestParam("username") String username)
 	{

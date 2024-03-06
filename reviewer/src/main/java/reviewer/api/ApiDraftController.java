@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.servlet.http.HttpServletRequest;
+import reviewer.config.JwtService;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 
@@ -16,26 +18,40 @@ import reviewer.model.Review;
 @RequestMapping(path="/api/draft" , produces="application/json")
 public class ApiDraftController {
 	
+	
+	@Autowired
+	private HttpServletRequest request;
+	
+	@Autowired
+	private JwtService jwtService;
 
 	@Autowired
 	private ReviewRepository reviewRepo;
 	
-	 /**
-     * Retrieves and displays the drafts associated with the logged-in user.
-     * 
-     * @param user  the user object retrieved from the session
-     * @param model the model to which attributes can be added
-     * @return the view name for the "drafts" page which contains the drafts of the user
-     */
+	
+	
+	private String getUsernameFromToken()
+	{
+	    String authHeader = request.getHeader("Authorization");
+	    String jwt = authHeader.substring(7);  
+	    String username = jwtService.extractUsername(jwt);
+	    return username;
+	}
+	
+
+	
 	@GetMapping
 	@Operation(
-			tags= {"drafts and submissions"},
-			operationId = " ",
-			summary = " find drafts",
-			description = " search drafts there for username provided and display them"
+		    tags = {"Drafts and Submissions"},
+		    operationId = "",
+		    summary = "Find drafts",
+		    description = "Retrieve drafts associated with the provided username.",
+		    parameters = @Parameter(name="username" ,description = "The username for which to retrieve drafts.",example="jonny")
 		)
-	public Iterable<Review> drafts(@RequestParam("username") String username) 
+	public Iterable<Review> drafts() 
 	{
+	   
+	    String username = getUsernameFromToken();
 		ArrayList<Review> draftList = new ArrayList<Review>();
      	draftList = reviewRepo.findAllByIdUserIdAndReviewStatus(username,"draft");
 		return draftList;
