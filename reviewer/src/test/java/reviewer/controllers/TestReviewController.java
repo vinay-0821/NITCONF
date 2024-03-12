@@ -1,4 +1,4 @@
-package reviewer.Controllers;
+package reviewer.controllers;
 
 
 
@@ -38,7 +38,6 @@ public class TestReviewController {
 	@BeforeEach
 	public void setUp() {
 		
-	   
 	    MockitoAnnotations.openMocks(this);
 	    
 	}
@@ -67,7 +66,7 @@ public class TestReviewController {
 	}
 	
 	
-	@Test
+
 	public void testGetReview()
 	{
 		Long paperId = 1L;

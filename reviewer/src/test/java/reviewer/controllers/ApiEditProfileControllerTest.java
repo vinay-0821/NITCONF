@@ -1,6 +1,6 @@
 package reviewer.controllers;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -12,7 +12,6 @@ import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +29,6 @@ import reviewer.model.Tags;
 import reviewer.model.User;
 import reviewer.rest.ApiEditProfileController;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class ApiEditProfileControllerTest {
 
