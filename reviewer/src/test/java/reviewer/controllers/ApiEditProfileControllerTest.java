@@ -1,4 +1,4 @@
-package reviewer;
+package reviewer.controllers;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
