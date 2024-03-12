@@ -18,14 +18,14 @@
       <div class="container w-25 my-5 bg-light ">
 			
 			<br>
-		
+		   
 			<div class="mb-3">
 				<h3 class="font-weight-normal">Login</h3>
 			</div>
         
         <div class="row"> 
 			<div class="col-md-10">
-		    <form method="post"  action="/api/login">
+		    <form method="post"  action="/api/dasboard">
 				
 				<label class="form-label" for="email">Username</label>
 				<input class="form-control" type="text" name="email" placeholder="Enter your username">
@@ -33,7 +33,7 @@
 				<label class="form-label" for="password">Password</label>
 				<input class="form-control" type="password" name="password" placeholder="Enter your Password">
 				<br>
-				<p class="text-danger" th:if="${param.error}">Invalid Credentials</p>
+				<p class="text-danger d-none" id="invalid">Invalid Credentials</p>
 		 	    <button class="btn btn-primary" type="submit">Login</button>
 			    <br><br>
 			</form>
@@ -61,8 +61,16 @@
 					 body: JSON.stringify(data)
 					 
 				 }).then(res => res.json())
-				   .then(data => console.log(data))
-				   .catch(error => console.log(error));
+				   .then(data =>{
+				      console.log(data);
+                      window.location.href = "http://localhost:8080/api/dashboard";
+                      //token needed here store it in http header
+                    })
+				   .catch(error =>{ 
+					 var element = document.getElementById("invalid");
+                     element.classList.remove("d-none");
+					 console.log(error)
+				   });
 			 });
 			 
 		</script>

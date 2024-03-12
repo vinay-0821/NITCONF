@@ -26,7 +26,6 @@ import reviewer.util.ReviewKey;
 
 @RestController
 @RequestMapping(path="/api/review" , produces="application/json")
-@SessionAttributes("user")
 public class ApiReviewController {
 	
 	
@@ -38,6 +37,8 @@ public class ApiReviewController {
 	
 		@Autowired
 		private ReviewRepository reviewRepo;
+		
+		
 		
 		
 		
@@ -56,7 +57,7 @@ public class ApiReviewController {
 	 
 	 
 	    @GetMapping("/view")
-		public ResponseEntity<Review> getReview(@RequestParam("id") Long paperId)
+		public ResponseEntity<Review> getReview(@RequestParam("paperId") Long paperId)
 		{
 		     
 	    	 String username = getUsernameFromToken();
@@ -76,7 +77,7 @@ public class ApiReviewController {
 	    
 	    
 	    @GetMapping("/clear")
-		public ResponseEntity<Review> clearReview(@RequestParam("id") Long paperId)
+		public ResponseEntity<Review> clearReview(@RequestParam("paperId") Long paperId)
 		{
 		     
 	    	 String username = getUsernameFromToken();
@@ -89,8 +90,9 @@ public class ApiReviewController {
 		     }
 		     
 		     Review review = optReview.get();
-		  
-
+		     
+	    	 review.modifyReview(new ReviewForm());
+	    	 review.setReviewStatus("new");
 		     reviewRepo.save(review);
 		     return new ResponseEntity<>(review,HttpStatus.OK);	
 		    
@@ -102,7 +104,7 @@ public class ApiReviewController {
 	    
 	    
 	    @PostMapping("/save")
-	    public ResponseEntity<Review> updateReview(@RequestParam("id") Long paperId,@RequestBody ReviewForm reviewForm )
+	    public ResponseEntity<Review> updateReview(@RequestParam("paperId") Long paperId,@RequestBody ReviewForm reviewForm )
 	    {
 	    	
 	    	 String username = getUsernameFromToken();
@@ -114,6 +116,8 @@ public class ApiReviewController {
 		     }
 		     
 		     Review review = optReview.get();
+			 review.modifyReview(reviewForm);
+			 review.setReviewStatus("draft");
 	 	  
 	 		 reviewRepo.save(review);
 	 		 return new ResponseEntity<>(review,HttpStatus.OK);
@@ -121,7 +125,7 @@ public class ApiReviewController {
 	    }
 	    
 	    @PostMapping("/submit")
-	    public ResponseEntity<Review> saveReview(@RequestParam("id") Long paperId,@RequestBody ReviewForm reviewForm )
+	    public ResponseEntity<Review> saveReview(@RequestParam("paperId") Long paperId,@RequestBody ReviewForm reviewForm )
 	    {
 	    	
 	    	 String username = getUsernameFromToken();
@@ -132,9 +136,14 @@ public class ApiReviewController {
 		    	 return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);   
 		     }
 		     
+		     //TODO fill the actions
+		     // add submission date for submissions
+		     
 		     Review review = optReview.get();
+		     review.modifyReview(reviewForm);
+			 review.setReviewStatus("submit");
 	 	   
-	 		   //TODO fill the actions
+	 		   
 	 		 return new ResponseEntity<>(null,HttpStatus.OK);
 	    }
 	
