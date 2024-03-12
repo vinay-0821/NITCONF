@@ -11,6 +11,14 @@ public class NonRestLoginController {
 	  @GetMapping("/login")
 	  public String login()
 	  {
+		  System.out.println("hello login");
 		 return "login";
+	  }
+	  
+	  @GetMapping("/dashboard")
+	  public String dashboard()
+	  {
+		  System.out.println("hello dashboard");
+		  return "dashboard";
 	  }
 }

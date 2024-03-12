@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import lombok.Data;
+import reviewer.util.ReviewForm;
 import reviewer.util.ReviewKey;
 
 
@@ -21,7 +22,6 @@ public class Review {
 	private ReviewKey id;
 	
 	//add attribute for review entity
-	
 	
 	@Column
 	private Integer technical;
@@ -72,6 +72,28 @@ public class Review {
 	@MapsId("paperId")
 	@JoinColumn(name="paper_id")
 	Paper paper;
+	
+
+	public void modifyReview(ReviewForm reviewform) {
+
+ 		this.originality = reviewform.getOriginality();
+ 		this.technical = reviewform.getTechnical();
+ 		this.significance = reviewform.getSignificance();
+ 		this.originality  = reviewform.getOriginality();
+ 		this.appropriate = reviewform.getAppropriate();
+ 		this.organization = reviewform.getOrganization();
+ 		this.style = reviewform.getStyle();
+ 		this.refeersConfidence = reviewform.getRefeersConfidence();
+ 		this.overall  = reviewform.getOverall();
+ 		this.comment   = reviewform.getComment();
+
+ 	}
+	
+	public void setReviewStatus(String reviewStatus) {
+ 		this.reviewStatus = reviewStatus;
+ 	}
+	
+	
 
 	
 	
