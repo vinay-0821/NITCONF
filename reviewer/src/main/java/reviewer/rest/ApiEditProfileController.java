@@ -39,12 +39,6 @@ public class ApiEditProfileController {
 	
 	
 	@GetMapping("/all-tags")
-	@Operation(
-		    tags = {"Navigation and Profile"},
-		    operationId = "displayTags",
-		    summary = "Display tags",
-		    description = "Show all tags currently available."
-		)
 	public Iterable<Tags> getAllTags()
 	{
 		ArrayList<Tags> tags = tagsRepo.findAll();
@@ -52,13 +46,6 @@ public class ApiEditProfileController {
 	}
 	
 	@GetMapping
-	@Operation(
-		    tags = {"Navigation and Profile"},
-		    operationId = "findUser",
-		    summary = "Find user",
-		    description = "Search for a user and display their details including bio, tags, contact, etc.",
-		    parameters = @Parameter(name="username" ,description = "The username of the user to retrieve details for." , example="jonny")
-		)
 	public User getUserDetails()
 	{
 		

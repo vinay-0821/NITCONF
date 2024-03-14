@@ -41,7 +41,7 @@ public class ApiDraftControllerTest {
     public void testDraftsSuccess() throws Exception {
         // Arrange
         String username = "test_user";
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9..."; // Mock JWT with username
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9"; // Mock JWT with username
         ArrayList<Review> expectedDrafts = new ArrayList<>(); // Use ArrayList directly
         Mockito.when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
         Mockito.when(jwtService.extractUsername(jwtToken)).thenReturn(username);
@@ -61,7 +61,7 @@ public class ApiDraftControllerTest {
     public void testDraftsEmpty() throws Exception {
         // Arrange
         String username = "test_user";
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9..."; // Mock JWT with username
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9"; // Mock JWT with username
         List<Review> expectedDrafts = Collections.emptyList();
         Mockito.when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
         Mockito.when(jwtService.extractUsername(jwtToken)).thenReturn(username);
@@ -84,8 +84,7 @@ public class ApiDraftControllerTest {
         Mockito.when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
         Mockito.when(jwtService.extractUsername(jwtToken)).thenThrow(new RuntimeException("Mock JWT error"));
 
-        // Act (exception expected)
-        // You may want to change the expected exception type based on your actual implementation
+    
         assertThrows(RuntimeException.class, () -> controller.drafts());
     }
 }

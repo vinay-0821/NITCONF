@@ -42,18 +42,20 @@ public class ApiReviewController {
 		
 		
 		
-		private String getUsernameFromToken()
+		public String getUsernameFromToken()
 		{
 		    String authHeader = request.getHeader("Authorization");
 			    
 			//	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {     // no need of this as token will be verified before
 			//	      return null;
 			//	    }
-			    
+		    System.out.println("authHeader " + authHeader);
 		    String jwt = authHeader.substring(7);  
 		    String username = jwtService.extractUsername(jwt);
+		    System.out.println("username " + username);
 		    return username;
 		}
+		
 	 
 	 
 	    @GetMapping("/view")
@@ -63,6 +65,7 @@ public class ApiReviewController {
 	    	 String username = getUsernameFromToken();
 	    	 
 		     Optional<Review> optReview = reviewRepo.findById(new ReviewKey(paperId,username));
+             System.out.println(optReview);
 		     
 		     if(optReview.isPresent() == false)
 		     {

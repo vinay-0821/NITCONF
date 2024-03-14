@@ -92,6 +92,12 @@ public class Review {
 	public void setReviewStatus(String reviewStatus) {
  		this.reviewStatus = reviewStatus;
  	}
+
+	public void setReviewKey(ReviewKey reviewKey) {
+		
+		this.id = reviewKey;
+		
+	}
 	
 	
 
