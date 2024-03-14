@@ -28,7 +28,7 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" th:href="@{/profile}">View Profile</a>
+                                <a class="nav-link active" id="profile" aria-current="page">View Profile</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -154,6 +154,12 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
     </script>
+    
+    <script>
+		const token = localStorage.getItem("token")
+		document.getElementById("profile").setAttribute("href", `/api/profile?token=${token}`);
+		console.log(token)
+	</script>
 
 </body>
 
