@@ -33,7 +33,7 @@ public class SubmissionsController {
      *
      * @return the view name for the "submissions" page
      */
-	@GetMapping()
+	@GetMapping
 	public String submission(@ModelAttribute User user,Model model)
 	{
 		ArrayList<Review> SubmissionList = new ArrayList<Review>();
@@ -48,7 +48,7 @@ public class SubmissionsController {
 	    * If <code>action</code> is equal to view<br>
 	    *   It displays the submission associated with the given paperId and current logged-in user<br>
 	    * If <code>action</code> is equal to delete<br>
-	    *   It deletes the submission associated with the give paperId and current logged-in user<br>
+	    *   It deletes the submission associated with the given paperId and current logged-in user<br>
 	    * @param action   the action to perform (view or delete)
 	    * @param paperId  the ID of the paper associated with the review
 	    * @param model    the model to which attributes can be added
@@ -57,11 +57,40 @@ public class SubmissionsController {
 	    *  
 	    * @return the view name based on the action performed
 	    */
+	@GetMapping("/{paperId}")
 	public String getSubmission(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,Model model,@ModelAttribute User user)
 	{
 		
-		//TODO implement the feature
-	    return "submission";
+		
+		if(action.equals("view")) {
+			
+			Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
+		    model.addAttribute("review",review);
+		    //model.addAttribute("reviewForm",new ReviewForm(review));
+			
+			
+			return "redirect:/review";
+		}
+		
+		if(action.equals("delete")) {
+			
+			 // change reviewstatus to new from submit ...
+			 // and clear that review
+			 Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
+	    	 review.modifyReview(new ReviewForm());
+	    	 review.setReviewStatus("new");
+	    	 reviewRepo.save(review);
+			
+			
+			return "submissions";
+		}
+		
+		
+		System.out.println("not working");
+		return "redirect:/error";
+		
+		
+		
 	    
 	}
 	
@@ -83,8 +112,20 @@ public class SubmissionsController {
 	   public String updateSubmission(@RequestParam(name = "action")String action ,@RequestParam("id") Long paperId,@ModelAttribute("reviewForm") ReviewForm reviewForm ,@ModelAttribute("user") User user)
 	   {
 		   
+		   if(action.equals("edit")) {
+				
+			   Review review = reviewRepo.findById(new ReviewKey(paperId,user.getUsername())).get();
+			   review.modifyReview(reviewForm);
+			   review.setReviewStatus("submit");// for assurity
+			 //  System.out.println(review.toString());
+			   reviewRepo.save(review);
+			  
+				
+			   return "redirect:/submissions";
+		   }
 		   
-		  return "submission";
+		  System.out.println("not working");
+		  return "redirect:/error";
 	   }
 
 
