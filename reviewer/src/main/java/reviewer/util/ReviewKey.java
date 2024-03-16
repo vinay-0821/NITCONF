@@ -27,6 +27,16 @@ public class ReviewKey implements Serializable{
 		this.userId = userId;
 		
 	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public Long getPaperId() {
+		return paperId;
+	}
+	
+	
 	
 	
 

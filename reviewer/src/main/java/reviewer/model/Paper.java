@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +30,12 @@ public class Paper {
 	@ManyToMany(fetch = FetchType.LAZY)             // modified to lazy form eager
     private List<Tags> tags = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy= "paper")
 	private List<Review> review;                           //change to set?
 
+	
+	
 	public Long getId() {
 		return id;
 	}

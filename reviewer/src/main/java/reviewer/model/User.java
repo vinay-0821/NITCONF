@@ -182,4 +182,16 @@ public class User implements UserDetails{
 				+ ", bio=" + bio + ", tags=" + tags + ", review=" + "]";
 	}
 
+	public void modify(User user) {
+		
+		this.bio = user.getBio();
+		this.contactno = user.getContactno();
+		this.name = user.getName();
+		this.tags = user.getTags();
+		
+		
+	}
+
+	
+
 }

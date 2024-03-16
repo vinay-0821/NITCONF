@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +21,11 @@ import reviewer.data.TagsRepository;
 import reviewer.data.UserRepository;
 import reviewer.model.Tags;
 import reviewer.model.User;
+import reviewer.util.ReviewForm;
 
 
 @RestController
-@RequestMapping(path="/api/edit-profile" , produces="application/json")
+@RequestMapping(path="/api" , produces="application/json")
 public class ApiEditProfileController {
 	
 	@Autowired
@@ -38,6 +41,7 @@ public class ApiEditProfileController {
 	private TagsRepository tagsRepo;
 	
 	
+	
 	@GetMapping("/all-tags")
 	public Iterable<Tags> getAllTags()
 	{
@@ -45,16 +49,17 @@ public class ApiEditProfileController {
 		return tags;
 	}
 	
-	@GetMapping
+	@GetMapping("/get-profile")
 	public User getUserDetails()
 	{
 		
+		System.out.println("getuserdeatilas");
 		String authHeader = request.getHeader("Authorization");
 	    
 //	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {     // no need of this as token will be verified before
 //	      return null;
 //	    }
-	    
+
 	   String jwt = authHeader.substring(7);  
 	   String username = jwtService.extractUsername(jwt);
 	   Optional<User> optUser = userRepo.findById(username);
@@ -65,6 +70,44 @@ public class ApiEditProfileController {
 		}
 		
 		return null;
+		
+	}
+	
+	@PostMapping(path= "/edit-profile" ,consumes = "application/json")
+	public ResponseEntity<User> editProfile(@RequestBody User user1)
+	{
+		
+		System.out.println(user1);
+
+		String authHeader = request.getHeader("Authorization");
+	    
+//	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {     // no need of this as token will be verified before
+//	      return null;
+//	    }
+		   
+	   //save only the changed ones
+	   String jwt = authHeader.substring(7);  
+	   String username = jwtService.extractUsername(jwt);
+	   Optional<User> optUser = userRepo.findById(username);
+	   System.out.println(user1.getUsername());
+		System.out.println(username);
+	   
+	   
+		
+		if(optUser.isPresent())
+		{
+			User user = optUser.get();
+
+			if(user1.getUsername().equals(user.getUsername()))
+			{
+				user.modify(user1);
+				userRepo.save(user);
+			}
+				
+			return new ResponseEntity<>(user,HttpStatus.OK);	
+		}
+		
+		return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 		
 	}
 	

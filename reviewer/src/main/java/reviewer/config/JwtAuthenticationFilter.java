@@ -38,6 +38,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	  
 
     final String authHeader = request.getHeader("Authorization");
+    final String contentType = request.getHeader("Content-Type");
+    /*if(contentType!= null && contentType.equals("application/x-www-form-urlencoded"))
+    {
+    	
+    	System.out.println("OMG");
+    	String username = request.getParameter("username");
+    	System.out.println("username");
+    }*/
+    
+    System.out.println("contentType " + contentType);
     String jwt;
     final String userEmail;
     

@@ -119,7 +119,7 @@
 									   <p class="card-text">Here, you can manage papers for review Navigate through your assigned papers, stay informed about deadlines, and ensure a seamless reviewing process.</p>
 					              </div>
 					              <div class="card p-2 border-0">
-									  <a th:href="@{/to-review}" class="btn btn-primary w-100 d-block">Review Center</a>
+									  <a id="review-center" class="btn btn-primary w-100 d-block">Review Center</a>
 								  </div>   
 							  </div>
 							  <div class="card p-2 border-">
@@ -129,7 +129,7 @@
 									  <p class="card-text">Here, you can revisit papers you've previously saved, giving you the flexibility to refine your reviews before submission</p>
 			                      </div>
 			                      <div class="card p-2 border-0">
-			                        <a th:href="@{/drafts}" class="btn btn-secondary w-100 d-block">Drafts</a>
+			                        <a id="drafts" class="btn btn-secondary w-100 d-block">Drafts</a>
 			                      </div>
 							  </div>
 							  <div class="card p-2 border-">
@@ -139,7 +139,7 @@
 									  <p class="card-text">Here you can see papers that you are already submitted.</p>
 					              </div>      
 								  <div class="card p-2 border-0">	    
-			                          <a th:href="@{/submissions}" class="btn btn-success w-100 d-block">Submissions</a>
+			                          <a id="submissions" class="btn btn-success w-100 d-block">Submissions</a>
 			                      </div>
 							  </div>
 							</div>
@@ -158,6 +158,9 @@
     <script>
 		const token = localStorage.getItem("token")
 		document.getElementById("profile").setAttribute("href", `/api/profile?token=${token}`);
+		document.getElementById("review-center").setAttribute("href", `/api/review-center?token=${token}`);
+		document.getElementById("drafts").setAttribute("href", `/api/drafts?token=${token}`);
+		document.getElementById("submissions").setAttribute("href", `/api/submissions?token=${token}`);
 		console.log(token)
 	</script>
 
