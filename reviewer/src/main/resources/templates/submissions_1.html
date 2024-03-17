@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- CSS File -->
+    <link rel="stylesheet" href="styles.css" />
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+      <header class="header">
+            <div class="logo left">
+               <!-- <i id="menu" class="material-icons">menu</i>  -->
+              <!-- <img src="https://www.freecodecamp.org/news/content/images/2022/01/yt-logo.png"> -->
+              <a class="navbar-brand" th:href="@{/dashboard}">NITCONF</a>
+            </div>
+            
+            <div class="search center">
+              <form action="">
+                <input type="text" placeholder="Search" />
+                <button><i class="material-icons">search</i></button>
+              </form>  
+            </div>
+            
+            <div class="icons right">
+                <a th:href="@{/notifications}">
+                    <i class="material-icons">notifications</i>
+                </a>
+                
+                <!-- <div class="dropdown">  
+                    <button class="dropbtn"> 
+                        <i class="material-icons display-this">account_circle</i>
+                    </button>  
+                    <div class="dropdown-content">  
+                    <a href="https://www.javatpoint.com/html-tutorial"> Html </a>  
+                    <a href="https://www.javatpoint.com/css-tutorial"> CSS </a>  
+                    <a href="https://www.javatpoint.com/javascript-tutorial"> JavaScript </a>  
+                    </div>  
+                </div>  -->
+
+
+                <div class="btn-group mx-3 my-3">
+                    <button class="btn btn-sm" type="button">
+                        <i class="material-icons display-this">account_circle</i>
+                    </button>
+                    <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                          
+                          <li><a class="dropdown-item" th:href="@{/review(action=view ,id=${review.paper.id})}">continue review</a></li>
+                          <li><a class="dropdown-item" th:href="@{/review(action=clear ,id=${review.paper.id})}">clear review</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <div class="text-center">
+                          <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
+                          </div>
+                     </ul>
+              </div>
+
+
+
+
+
+            </div>
+      </header>
+      <main>
+        <!-- <div class=”side-bar”>
+            <div class="nav">
+               <a class="nav-link active">
+                 <i class="material-icons">home</i>
+                 <span>Home</span>
+              </a>
+              <a class="nav-link">
+                 <i class="material-icons">local_fire_department</i>
+                 <span>Trending</span>
+              </a>
+              <a class="nav-link">
+                 <i class="material-icons">subscriptions</i>
+                 <span>Subscriptions</span>
+              </a> 
+              <a class="nav-link active">
+                <i class="material-icons">home</i>
+                <span>Home</span>
+             </a>
+             <a class="nav-link">
+                <i class="material-icons">local_fire_department</i>
+                <span>Trending</span>
+             </a>
+             <a class="nav-link">
+                <i class="material-icons">subscriptions</i>
+                <span>Subscriptions</span>
+             </a>
+            </div>
+            <hr>
+            </div> -->
+
+            <div class="side-bar">
+                <div class="nav">
+                    <a th:href="@{/to-review}" class="nav-link">
+                        Review Center
+                    </a>
+                    <a th:href="@{/drafts}" class="nav-link">
+                        Drafts
+                    </a>
+                    <a th:href="@{/submissions}" class="nav-link">
+                        Submissions
+                    </a>
+                </div>
+                <hr>
+              </div>
+              
+          <div class="content">
+            <div class="container-md w-60">
+                <div class="row bg-light bg-gradient">
+                   <div class="col-md-1 border text-center  py-2">
+                       <p class="h6 font-weight-normal">Paper id</p>
+                   </div>
+                   <div class="col-md-5 border text-center  py-2">
+                       <p class="h6 font-weight-normal">Name</p>
+                   </div>
+                   <div class="col-md-2 border text-center  py-2">
+                       <p class="h6 font-weight-normal">Deadline</p>
+                   </div>
+                   <div class="col-md-2 border text-center  py-2">
+                       <p class="h6 font-weight-normal">submitted on</p>
+                   </div>
+                   <div class="col-md border text-center  py-2">
+                       <p class="h6 font-weight-normal">Actions</p>
+                   </div>
+                </div>
+   
+                <div class="row" th:each="review : ${draftList}">
+                   <div class="col-md-1 border py-2">
+                       <p class="d-inline">#</p> <p class="h6 d-inline" type="number" th:text="${review.paper.id}"></p>
+                       <br>
+                       <br>
+                       <p class="text-danger font-italic" th:if="${review.reviewStatus == 'draft'}">[Draft]<p/>
+                   </div>
+                   <div class="col-md-5 border py-2">
+                       <p class="h6 font-weight-normal" th:text="${review.paper.name}">
+                       </p>
+                       <br>
+                       <a th:href="@{/file/{path}(path=${review.paper.pdfLink})}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
+                       <div class="dropdown d-inline">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          View Tags
+                         </button>
+                         <ul class="dropdown-menu bg-light">
+                           <li th:each="tag : ${review.paper.tags}" th:text="${tag.name}" class="p-1">Action</li>
+                         </ul>
+                       </div>
+
+                   </div>
+                   <div class="col-md-2 border py-2 text-center">
+                       <p class="h6 font-weight-normal" th:text="${review.paper.deadline}">06/02/2024</p>
+                   </div>
+                   <div class="col-md-2 border py-2 text-center">
+                       <p class="h6 font-weight-normal" th:text="${review.paper.deadline}">13/01/2024</p>
+                   </div>
+                   
+                    <div class="col-md border py-2" > 
+                       <div class="btn-group mx-3 my-3">
+                             <button class="btn btn-secondary btn-lg" type="button">
+                               actions
+                             </button>
+                             <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                               <span class="visually-hidden">Toggle Dropdown</span>
+                             </button>
+                             <ul class="dropdown-menu">
+                                   
+                                   <li><a class="dropdown-item" th:href="@{/review(id=${review.paper.id})}">Edit Submission</a></li>
+                                   <li><hr class="dropdown-divider"></li>
+                                   <div class="text-center">
+                                   <li> <button type="button" class="btn btn-outline-danger">Delete</button> </li>
+                                   </div>
+                              </ul>
+                       </div>
+                    </div>  
+                </div>
+
+        </div>
+          </div>
+          </main>
+
+          <script>
+            /* When the user clicks on the button,
+            toggle between hiding and showing the dropdown content */
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+                }
+        
+                // Close the dropdown menu if the user clicks outside of it
+                window.onclick = function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                    }
+                }
+            }
+          </script>
+        
+          <!-- <script>
+            function showDropdown() {
+              var dropdown = document.getElementById("myDropdown");
+              dropdown.classList.toggle("show"); // Toggles "show" class for visibility
+            }
+         </script> -->
+          
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous">
+        </script>
+        </body>
+        </html>
