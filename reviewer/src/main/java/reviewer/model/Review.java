@@ -1,6 +1,7 @@
 package reviewer.model;
 
 
+import java.util.Calendar;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,13 +52,13 @@ public class Review {
 	private Integer overall;
 	
 	@Column
-	private Date deadline;
+	private Calendar deadline;
 	
 	@Column
-	private Date submissionTime;
+	private Calendar submissionTime;
 	
 	@Column
-	private Date excuse;
+	private Calendar excuse;
 	
 	@Column
 	private String comment;
@@ -113,7 +114,12 @@ public class Review {
 		
 		return this.id;
 	}
+
 	
+	public void setSubmissionTime(Calendar submissionTime)
+	{
+		this.submissionTime = submissionTime;
+	}
 	
 	
 	

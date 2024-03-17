@@ -34,7 +34,7 @@
 				<input class="form-control" type="password" name="password" placeholder="Enter your Password">
 				<br>
 				<p class="text-danger d-none" id="invalid">Invalid Credentials</p>
-		 	    <button class="btn btn-primary" type="submit">Login</button>
+		 	    <button class="btn btn-primary" type="submit" >Login</button>  
 			    <br><br>
 			</form>
 			</div>
@@ -64,7 +64,7 @@
 					  localStorage.setItem("token", token)
 					  const url = `http://localhost:8080/api/dashboard?token=${token}`;
 					  console.log(url)
-					  window.location.href = url;
+					   window.location.href = url;
 				      // window.location.assign("dashboard.html");
 				     })
 					 .catch((error) => {
@@ -77,6 +77,16 @@
 			         element.classList.remove("d-none");
 					 console.log(error)
 				   });
+				   
+				   
+				   /*function login()
+				   {
+					  console.log("hello")
+					 const element =  document.getElementById("email")
+					 const username = element.value
+					  localStorage.setItem("usename",username) 
+				   }*/
+				   
 			
  
 		</script>

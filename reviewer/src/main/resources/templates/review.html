@@ -123,6 +123,15 @@
                                 <div class="m-2">
                                     <span class="h6 d-inline">Reviewer:</span> <span id="reviewername"></span><br>
                                 </div>
+                                <div class="m-2">
+                                    <span class="h6 d-inline">Status:</span> <span id="reviewStatus"></span><br>
+                                </div>
+                                <div class="m-2">
+                                    <span class="h6 d-inline">Deadline:</span> <span id="deadline"></span><br>
+                                </div>
+                                <div class="m-2">
+                                    <span class="h6 d-inline">Submitted on:</span> <span class="d-none" id="submissionTime"></span><br>
+                                </div>
                             </div>
                          </div>
                           
@@ -258,8 +267,10 @@
 					     <input class="btn btn-secondary m-3" name="method" type="submit" value="Save to Draft">-->
 					     
 					     
-					     <button class="btn btn-success m-3" onclick="toSubmissions()">Submit</button>
-					     <button class="btn btn-secondary m-3" onclick="toDrafts()">Save to Drafts</button>
+					     <button class="btn btn-success m-3"  id="submission" onclick="toSubmissions()">Submit</button>
+					     <button class="btn btn-secondary m-3"  id="drafts" onclick="toDrafts()">Save to Drafts</button>
+					     <button class="btn btn-secondary m-3 d-none"  id="editSubmission" onclick="toeditSubmission()">ReSubmit</button>
+					     <button class="btn btn-danger m-3" id="cancel" onclick="tocancel()">Cancel</button></a>
 					     
 					 </div>
 						 
@@ -281,9 +292,18 @@
     </script>
     
     <script>
+		
+
+		
+		//change layout according to review status
+		
+		//change date format
+		
 		const token = localStorage.getItem("token")
 		const searchParams = new URLSearchParams(window.location.search)
 		const paperId = searchParams.get("paperId")
+		
+		document.getElementById("cancel").setAttribute("href", `/api/review-center?token=${token}`)
 		
 		
 		function setValue(id,value)
@@ -298,6 +318,7 @@
 			document.getElementById("paperId").textContent = paper.id;
 		    document.getElementById("papername").textContent= paper.name;
 		    document.getElementById("reviewername").textContent = review.id.userId;
+
 		    
 		    setValue("technical",review.technical)
 		    setValue("significance",review.significance)
@@ -338,16 +359,47 @@
 			     
 		 }
 		 
+		 function modifyOnReviewStatus(review)
+		 {
+			 document.getElementById("deadline").textContent = review.deadline;
+		    
+			 if(review.reviewStatus == 'submit')
+			 {
+				document.getElementById("reviewStatus").textContent = 'submitted';
+				//document.getElementById("reviewStatus").classList.add("text-success")
+				
+				const submissionTime =  document.getElementById("submissionTime")
+				submissionTime.classList.remove("d-none")
+				submissionTime.textContent = review.submissionTime;
+				
+				
+				document.getElementById("submission").classList.add("d-none")
+		        document.getElementById("drafts").classList.add("d-none")
+		        document.getElementById("editSubmission").classList.remove("d-none")
+				
+				  
+			 }
+			 else
+			 {
+				 document.getElementById("reviewStatus").textContent = 'pending';
+			 }
+			 
+		 }
+		 
+		 
 		 let review;
 		 let paper;
 		 async function displayReviewDetails()
 		 {
 			 review = await getDataFromURL(`http://localhost:8080/api/review/get?paperId=${paperId}`)
 			 paper = await getDataFromURL(`http://localhost:8080/api/get-paper?paperId=${paperId}`)
+			 modifyOnReviewStatus(review)
              setReviewDetails(review,paper)
 		 }
 		 
 		 displayReviewDetails()
+		 
+		  
 		  
 		 function toDrafts()
 		 {
@@ -383,8 +435,70 @@
 		 function toSubmissions()
 		 {
 			 event.preventDefault()
-			 console.log("submissions")
+			 const form = document.querySelector('.form');
+			 const formData = new FormData(form);
+			 const data = Object.fromEntries(formData)
+			 
+			 console.log(data)
+			 
+			 fetch(`http://localhost:8080/api/review/submit?paperId=${paperId}`, {
+			    method: 'POST',
+			    headers: {
+			      'Content-Type' : 'application/json',
+			      'Authorization' : `Bearer ${token}`,
+			    },
+			    body: JSON.stringify(data) // Send data as JSON string
+			  })
+			  .then(res => res.json()) // Handle response (assuming JSON)
+			  .then(data => {
+				  
+				   const url = `http://localhost:8080/api/submissions?token=${token}`
+				   window.location.href = url
+			       // Handle successful data submission
+			  })
+			  .catch(error => {
+			    console.error("Error sending data:", error);
+			  });
 		 }
+		 
+		 
+		 function toeditSubmission()
+		 {
+			  event.preventDefault()
+			 const form = document.querySelector('.form');
+			 const formData = new FormData(form);
+			 const data = Object.fromEntries(formData)
+			 
+			 console.log(data)
+			 
+			 fetch(`http://localhost:8080/api/edit-submission?paperId=${paperId}`, {
+			    method: 'POST',
+			    headers: {
+			      'Content-Type' : 'application/json',
+			      'Authorization' : `Bearer ${token}`,
+			    },
+			    body: JSON.stringify(data) // Send data as JSON string
+			  })
+			  .then(res => res.json()) // Handle response (assuming JSON)
+			  .then(data => {
+				  
+				   const url = `http://localhost:8080/api/submissions?token=${token}`
+				   window.location.href = url
+			       // Handle successful data submission
+			  })
+			  .catch(error => {
+			    console.error("Error sending data:", error);
+			  });
+			 
+		 }
+		 
+		 function tocancel()
+		 {
+			 event.preventDefault()
+			 window.location.href=`/api/review-center?token=${token}`
+		 }
+		 
+		 
 		 
 		 
 			  

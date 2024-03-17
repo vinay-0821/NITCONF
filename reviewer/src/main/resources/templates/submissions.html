@@ -193,7 +193,7 @@
 		   {
 			  const data = await fetch(url, 
 			   {
-				   method : GET,
+				   method : `GET`,
 				   headers: {
 						 'Content-Type' : `application/json`,
 						 'Authorization': `Bearer ${token}`
@@ -286,7 +286,7 @@
 										  </button>
 										  <ul class="dropdown-menu">
 											    
-											    <li><a class="dropdown-item" href="/review/view?id=${paper.id}&token=${token}">Edit Submission</a></li>
+											    <li><a class="dropdown-item" href="/api/review/view?paperId=${paper.id}&token=${token}">Edit Submission</a></li>
 											    <li><hr class="dropdown-divider"></li>
 											    <div class="text-center">
 											    <li> <button type="button" class="btn btn-outline-danger">Delete</button> </li>
