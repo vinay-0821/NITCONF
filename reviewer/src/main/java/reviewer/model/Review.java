@@ -1,11 +1,14 @@
 package reviewer.model;
 
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -41,13 +44,20 @@ public class Review {
 	@Column
 	private Integer style;
 	
-	
 	@Column
 	private Integer refeersConfidence;
 	
 	@Column
 	private Integer overall;
 	
+	@Column
+	private Date deadline;
+	
+	@Column
+	private Date submissionTime;
+	
+	@Column
+	private Date excuse;
 	
 	@Column
 	private String comment;
@@ -62,7 +72,7 @@ public class Review {
 	private String reviewStatus;
 	
 	@JsonIgnore
-	@ManyToOne 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("userId")
 	@JoinColumn(name="user_id")
 	User user;
@@ -74,18 +84,18 @@ public class Review {
 	Paper paper;
 	
 
-	public void modifyReview(ReviewForm reviewform) {
+	public void modifyReview(ReviewForm review) {
 
- 		this.originality = reviewform.getOriginality();
- 		this.technical = reviewform.getTechnical();
- 		this.significance = reviewform.getSignificance();
- 		this.originality  = reviewform.getOriginality();
- 		this.appropriate = reviewform.getAppropriate();
- 		this.organization = reviewform.getOrganization();
- 		this.style = reviewform.getStyle();
- 		this.refeersConfidence = reviewform.getRefeersConfidence();
- 		this.overall  = reviewform.getOverall();
- 		this.comment   = reviewform.getComment();
+ 		this.originality = review.getOriginality();
+ 		this.technical = review.getTechnical();
+ 		this.significance = review.getSignificance();
+ 		this.originality  = review.getOriginality();
+ 		this.appropriate = review.getAppropriate();
+ 		this.organization = review.getOrganization();
+ 		this.style = review.getStyle();
+ 		this.refeersConfidence = review.getRefeersConfidence();
+ 		this.overall  = review.getOverall();
+ 		this.comment   = review.getComment();
 
  	}
 	
@@ -98,6 +108,13 @@ public class Review {
 		this.id = reviewKey;
 		
 	}
+
+	public ReviewKey getId() {
+		
+		return this.id;
+	}
+	
+	
 	
 	
 

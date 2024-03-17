@@ -58,7 +58,7 @@ public class ApiReviewController {
 		
 	 
 	 
-	    @GetMapping("/view")
+	    @GetMapping("/get")
 		public ResponseEntity<Review> getReview(@RequestParam("paperId") Long paperId)
 		{
 		     

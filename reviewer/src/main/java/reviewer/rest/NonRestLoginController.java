@@ -27,4 +27,35 @@ public class NonRestLoginController {
 		  return "profile";
 	  }
 	  
+	  @GetMapping("/edit-profile")
+	  public String editProfile()
+	  {
+		  return "edit-profile";
+	  }
+	  
+	  @GetMapping("/review-center")
+	  public String toReview()
+	  {
+		  return "review-center";
+	  }
+	  
+	  @GetMapping("/drafts")
+	  public String drafts()
+	  {
+		  return "drafts";
+	  }
+	  
+	  @GetMapping("/submissions")
+	  public String submissions()
+	  {
+		  return "submissions";
+	  }
+	  
+	  @GetMapping("/review/view")
+	  public String viewReview()
+	  {
+		  return "review";
+	  }
+	  
+	  
 }
