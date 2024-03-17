@@ -125,14 +125,12 @@
 
 	            	<div class="row">
 						<div class="col-md-1 border py-2">
-							<p class="d-inline">#</p> <p class="h6 d-inline" type="number">1</p>
+							<p class="d-inline">#</p> <p class="h6 d-inline" type="number"></p>
 							<br>
 							<br>
-							<!--<p class="text-danger font-italic" th:if="${review.reviewStatus == 'draft'}">[Draft]<p/>
-							<p class="text-success font-italic" th:if="${review.reviewStatus == 'submitted'}">[Submitted]<p/>-->
 						</div>
 						<div class="col-md-6 border py-2">
-							<p class="h6 font-weight-normal" text="">
+							<p class="h6 font-weight-normal">
 							</p>
 							<br>
 							<a href="@{/file/{path}(path=${review.paper.pdfLink})}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
@@ -161,7 +159,7 @@
 								  <ul class="dropdown-menu">
 									    
 									    <li><a class="dropdown-item" href="@{/review(action=view ,id=${review.paper.id})}">continue review</a></li>
-									    <li><a class="dropdown-item" href="@{/review(action=clear ,id=${review.paper.id})}">clear review</a></li>
+									    <li><a class="dropdown-item" onclick="clearReview()" >clear review</a></li>
 									    <li><hr class="dropdown-divider"></li>
 									    <div class="text-center">
 									      <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
@@ -184,8 +182,17 @@
     </script>
     
     <script>
-		const token = localStorage.getItem("token")
-		 async function getDataFromURL(url)
+		   const token = localStorage.getItem("token")
+		   
+		   
+		   function getFormatDate(date)
+		   {
+			   const formatDate = date.getDate()+'/'+ date.getMonth()+'/'+ date.getYear()+" "+ date.getHours()+":"+ date.getMinutes()+":"+ date.getSeconds();
+			   return formatDate;
+			   
+		   }
+		   
+		   async function getDataFromURL(url)
 		   {
 			  const data = await fetch(url, 
 			   {
@@ -208,6 +215,110 @@
 			  return data;
 			     
 		   }
+		   
+		   async function setReviewDetails(review)
+		   {
+			  const element = document.getElementById('table')
+			  innerHTML = `<div class="row bg-light bg-gradient">
+				            <div class="col-md-1 border text-center  py-2">
+				                <p class="h6 font-weight-normal">Paper id</p>
+				            </div>
+				            <div class="col-md-6 border text-center  py-2">
+				                <p class="h6 font-weight-normal">Name</p>
+				            </div>
+				            <div class="col-md-3 border text-center  py-2">
+				                <p class="h6 font-weight-normal">Deadline</p>
+				            </div>
+				            <div class="col-md border text-center  py-2">
+				                <p class="h6 font-weight-normal">Actions</p>
+				            </div>
+				           </div>`
+				           
+				           
+			  for(let i =0;i<review.length;i++)
+			  {
+				  console.log(review[i])
+				  const paper = await getDataFromURL(`http://localhost:8080/api/get-paper?paperId=${review[i].id.paperId}`)
+				  console.log(paper)
+				  const deadline = new Date(review[i].deadline)
+				  //const deadline = getFormatDate(new Date(review[i].deadline))
+				  
+      
+                  
+				  
+				 innerHTML +=  `<div class="row">
+		                          <div class="col-md-1 border py-2">
+		                            <p class="d-inline">#</p> <p class="h6 d-inline" type="number">${paper.id}</p><br><br>
+		                            <p class="text-danger font-italic">[Draft]<p/>
+			                    </div>`
+		                 
+				 innerHTML +=   `
+					             <div class="col-md-6 border py-2">
+					                <p class="h6 font-weight-normal">${paper.name}</p><br>
+					                <a href="/file/${paper.pdfLink}?token=${token}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
+					                <div class="dropdown d-inline">
+					                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					                    View Tags
+					                   </button>
+					                   <ul class="dropdown-menu bg-light">`
+		         paper.tags.forEach(tag => {
+					console.log(tag.name)
+				    innerHTML += ` <li class="p-1">${tag.name}</li>`
+			  	});
+						         
+		               
+		           
+		           innerHTML += ` </ul>
+		                          </div>
+		                          </div>
+						            <div class="col-md-3 border py-2 text-center">
+						                <p class="h6 font-weight-normal">${deadline}</p>
+						            </div>
+						            
+						            <div class="col-md border py-2" > 
+							          <div class="btn-group mx-3 my-3">
+										  <button class="btn btn-secondary btn-lg" type="button">
+										    actions
+										  </button>
+										  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+										    <span class="visually-hidden">Toggle Dropdown</span>
+										  </button>
+									      <ul class="dropdown-menu">
+										    <li><a class="dropdown-item" href="/api/review/view?paperId=${paper.id}&token=${token}">continue review</a></li>
+										    <li><a class="dropdown-item" onclick=clearReview("http://localhost:8080/api/review/clear?paperId=${paper.id}")>clear review</a></li>
+										    <li><hr class="dropdown-divider"></li>
+										    <div class="text-center">
+										      <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
+										    </div>
+								         </ul>
+								      </div>
+		                            </div>  
+						        </div>`
+			  }
+			  
+			  element.innerHTML = innerHTML
+			  
+			   
+		   }
+		   
+		   async function displayReview()
+		   {
+			  const data = await getDataFromURL('http://localhost:8080/api/get-drafts')
+			  console.log(data)
+			  setReviewDetails(data)
+		   }
+		   
+		   displayReview()
+		   
+		 
+		   
+		   async function clearReview(url)
+		   {
+			  getDataFromURL(url)
+			  window.location.href = `http://localhost:8080/api/drafts?token=${token}`
+			 
+		   }
+		   
 		   
 		   
 	</script>
