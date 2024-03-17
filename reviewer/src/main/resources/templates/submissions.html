@@ -102,10 +102,10 @@
                 
                 <div class="col-12 col-sm-9 col-xl-10 px-2 pt-5">
                     <div class="container text-center my-3">
-			             <h1>Submissions</h1>
+			             <p class="h2 my-4 font-weight-normal">Submissions</p>
 		            </div>
-		  
-		            <div class="container-md w-60">
+		 		 <div class="container-md justify-content-center">
+		            <div class="container-md w-60 " id="table">
 							 <div class="row bg-light bg-gradient">
 								<div class="col-md-1 border text-center  py-2">
 									<p class="h6 font-weight-normal">Paper id</p>
@@ -124,12 +124,12 @@
 								</div>
 						     </div>
 	            
-			                 <div class="row" th:each="review : ${draftList}">
+			                <!-- <div class="row">
 								<div class="col-md-1 border py-2">
-									<p class="d-inline">#</p> <p class="h6 d-inline" type="number" th:text="${review.paper.id}"></p>
+									<p class="d-inline">#</p> <p class="h6 d-inline" type="number"></p>
 									<br>
 									<br>
-									<p class="text-danger font-italic" th:if="${review.reviewStatus == 'draft'}">[Draft]<p/>
+									<p class="text-danger font-italic">[Submitted]<p/>
 								</div>
 								<div class="col-md-5 border py-2">
 									<p class="h6 font-weight-normal" th:text="${review.paper.name}">
@@ -171,9 +171,10 @@
 									       </ul>
 									</div>
 			                     </div>  
-					         </div>
+					         </div> -->
 
                      </div>
+                    </div>
         
                   </div>
                 </div>
@@ -185,6 +186,129 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
     </script>
+    
+    <script>
+		  const token = localStorage.getItem("token")
+		   async function getDataFromURL(url)
+		   {
+			  const data = await fetch(url, 
+			   {
+				   method : GET,
+				   headers: {
+						 'Content-Type' : application/json,
+						 'Authorization': Bearer ${token}
+				   }
+			    }) 
+			    .then(res => res.json())    //return res.json  which is json
+				.then(data =>{
+					  
+					  return data
+				      
+				 }).catch((error) => {
+					 
+					  console.log(error);   // error handling
+			     });
+			     
+			  return data;
+			     
+		   }
+		   
+		   async function setReviewDetails(review)
+		   {
+			  const element = document.getElementById('table')
+			  innerHTML = `<div class="row bg-light bg-gradient">
+								<div class="col-md-1 border text-center  py-2">
+									<p class="h6 font-weight-normal">Paper id</p>
+								</div>
+								<div class="col-md-5 border text-center  py-2">
+									<p class="h6 font-weight-normal">Name</p>
+								</div>
+								<div class="col-md-2 border text-center  py-2">
+									<p class="h6 font-weight-normal">Deadline</p>
+								</div>
+                                <div class="col-md-2 border text-center  py-2">
+									<p class="h6 font-weight-normal">Submitted on</p>
+								</div>
+								<div class="col-md border text-center  py-2">
+									<p class="h6 font-weight-normal">Actions</p>
+								</div>
+						     </div>`
+				           
+				           
+			  for(let i =0;i<review.length;i++)
+			  {
+				  console.log(review[i])
+				  const paper = await getDataFromURL(http://localhost:8080/api/get-paper?paperId=${review[i].id.paperId})
+				  console.log(paper)
+				  const deadline = new Date(review[i].deadline)
+				  const submissionTime = new Date(review[i].submissionTime)
+				  
+				 innerHTML +=  `<div class="row">
+		                          <div class="col-md-1 border py-2 px-1">
+		                            <p class="d-inline">#</p> <p class="h6 d-inline" type="number">${paper.id}</p><br><br>
+		                            <p class="text-success mx-0 font-italic">[Submitted]<p/>
+			                    </div>`
+		                 
+				 innerHTML +=   `<div class="col-md-5 border py-2">
+									<p class="h6 font-weight-normal">${paper.name}</p>
+									<br>
+									<a href="/file/${paper.pdfLink}?token=${token}" target="_blank"><button class="btn btn-info mx-2">View PDF</button></a>
+								    <div class="dropdown d-inline">
+									 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									   View Tags
+									  </button>
+									  <ul class="dropdown-menu bg-light">`
+		         paper.tags.forEach(tag => {
+					console.log(tag.name)
+				    innerHTML += ` <li class="p-1">${tag.name}</li>`
+			  	});
+						         
+		               
+		
+		           innerHTML += `</ul>
+									</div>
+			
+								</div>
+								<div class="col-md-2 border py-2 text-center">
+									<p class="h6 font-weight-normal">${deadline}</p>
+								</div>
+                                <div class="col-md-2 border py-2 text-center">
+									<p class="h6 font-weight-normal">${submissionTime}</p>
+								</div>
+								
+								 <div class="col-md border py-2" > 
+									<div class="btn-group mx-3 my-3">
+										  <button class="btn btn-secondary btn-lg" type="button">
+										    actions
+										  </button>
+										  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+										    <span class="visually-hidden">Toggle Dropdown</span>
+										  </button>
+										  <ul class="dropdown-menu">
+											    
+											    <li><a class="dropdown-item" href="/review/view?id=${paper.id}&token=${token}">Edit Submission</a></li>
+											    <li><hr class="dropdown-divider"></li>
+											    <div class="text-center">
+											    <li> <button type="button" class="btn btn-outline-danger">Delete</button> </li>
+											    </div>
+									       </ul>
+									</div>
+			                     </div>  
+					         </div>`
+			  }
+			  
+			     element.innerHTML = innerHTML
+			}
+			   async function displayReview()
+		     {
+			   const data = await getDataFromURL('http://localhost:8080/api/get-submissions')
+			   console.log(data)
+			   setReviewDetails(data)
+		     }
+		   
+		      displayReview()
+		   
+	</script>
 
 </body>
 
