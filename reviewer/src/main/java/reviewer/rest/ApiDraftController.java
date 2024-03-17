@@ -15,7 +15,7 @@ import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 
 @RestController
-@RequestMapping(path="/api/drafts" , produces="application/json")
+@RequestMapping(path="/api/get-drafts" , produces="application/json")
 public class ApiDraftController {
 	
 	

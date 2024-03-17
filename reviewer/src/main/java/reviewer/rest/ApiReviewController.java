@@ -1,6 +1,8 @@
 package reviewer.rest;
 
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,13 +143,26 @@ public class ApiReviewController {
 		     
 		     //TODO fill the actions
 		     // add submission date for submissions
-		     
+		     //check for excuse date for submission
+		        
 		     Review review = optReview.get();
 		     review.modifyReview(reviewForm);
-			 review.setReviewStatus("submit");
+		     review.setSubmissionTime(Calendar.getInstance());
+		     review.setReviewStatus("submit");
+		     
+		     /*System.out.println(review.getSubmissionTime());
+		     System.out.println(review.getSubmissionTime().get(Calendar.HOUR));
+		     System.out.println(review.getSubmissionTime().get(Calendar.MINUTE));
+		     System.out.println(review.getSubmissionTime().get(Calendar.SECOND));
+		     System.out.println(review.getSubmissionTime().get(Calendar.YEAR));
+			 Calendar deadline = Calendar.getInstance();
+			 deadline.set(2024,03,18,12,0,0);
+	         review.setDeadline(deadline);*/
+		     reviewRepo.save(review);
+			
 	 	   
 	 		   
-	 		 return new ResponseEntity<>(null,HttpStatus.OK);
+	 		 return new ResponseEntity<>(review,HttpStatus.OK);
 	    }
 	
 }
