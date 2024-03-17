@@ -12,6 +12,7 @@
 
   /* header section*/
 .header {
+	background-color: #563d7c;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,7 +30,7 @@
 .side-bar {
     height: 100%;
     width: 17%;
-    background-color: white;
+    background-color: #ebeff5;
     overflow-y: hidden;
   } 
 
@@ -60,16 +61,16 @@
    
    .search form {
     display: flex;
-    border: 1px solid #ddd;
+    
     height: 45px;
    }
 
    .search input {
-    width: 600px;
+    width: 450px;
     padding:10px;
-    border: 0;
+    border: none;
     height: 100%;
-    border-radius: 2px 0 0 2px
+    border-radius: 20px 0 0 20px;
   }
   
   input:focus {
@@ -81,6 +82,7 @@
     height: 100%;
     width: 60px;
     border: none;
+    border-radius: 0 20px 20px 0;
   }
    
   .mic {
@@ -232,8 +234,9 @@
   .vcards {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 10%;
   }
   
   .vcard {
