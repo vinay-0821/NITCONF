@@ -74,6 +74,7 @@ public class ApiSubmissionsController {
 		
 
 		String username = jwtExtractor.getUsernameFromToken();
+
         Optional<Review> optReview = reviewRepo.findById(new ReviewKey(paperId,username));
 	     
 	     if(optReview.isPresent() == false)
