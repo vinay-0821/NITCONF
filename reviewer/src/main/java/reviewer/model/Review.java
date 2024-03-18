@@ -85,6 +85,11 @@ public class Review {
 	Paper paper;
 	
 
+	public Review(ReviewKey reviewKey) {
+		this.id=reviewKey;
+		// TODO Auto-generated constructor stub
+	}
+
 	public void modifyReview(ReviewForm review) {
 
  		this.originality = review.getOriginality();
