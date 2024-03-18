@@ -2,6 +2,7 @@ package reviewer.controllers;
 
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -32,19 +33,11 @@ import reviewer.data.UserRepository;
 import reviewer.model.Review;
 import reviewer.model.User;
 import reviewer.rest.ApiReviewController;
+import reviewer.service.JwtExtractor;
 import reviewer.util.ReviewKey;
 
 
-//@RunWith(MockitoJunitRunner.class)
 public class TestReviewController {
-
-	
-	private MockMvc mockMvc;
-	
-	ObjectMapper objectMapper = new ObjectMapper();
-    ObjectWriter objectWriter = objectMapper.writer();
-    
-    private String mockJwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXJ1biIsImlhdCI6MTcxMDIyMzAwMywiZXhwIjoxNzEwMjI0NDQzfQ.RyM3fOZr6AHKlL3hwhp6lgJKwS7uDk8rqJ8CujAsNws";
 	
 	
 	@Mock
@@ -59,55 +52,29 @@ public class TestReviewController {
 	@Mock
 	private ReviewRepository reviewRepo;
 	
+	@Mock 
+	private JwtExtractor jwtExtractor;
+	
 	@InjectMocks
 	private ApiReviewController apiReviewController;
 	
-	@BeforeEach
-	public void setUp() {
-		
-	    MockitoAnnotations.openMocks(this);
-	    this.mockMvc = MockMvcBuilders.standaloneSetup(apiReviewController).build();
-	    
-	}
-	
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-	@Test 
-	public void testGetUsernameFromToken() {
 		
-       User user = new User();
-       user.setUsername("tarun");
-       when(userRepo.findUserByUsername("tarun")).thenReturn(user);
-
-		when(jwtService.generateToken(user)).thenReturn(mockJwtToken);
-		when(jwtService.extractUsername(mockJwtToken)).thenReturn("tarun");
-		
-		String jwtToken = jwtService.generateToken(user);  
-		String username = jwtService.extractUsername(jwtToken); 
-		
-		//System.out.println(jwtToken + " " + username); 
-		Assertions.assertEquals(username, user.getUsername());
-	    
-	     
-	     
-	}
-	
-	
     @Test
-	public void testGetReview()
+	public void GetReview_Success()
 	{
-		Long paperId = 1L;
-		String username = "taurn";
-		Review review = new Review();
-
-		when(request.getHeader("Authorization")).thenReturn("Bearer " + mockJwtToken);
-		when(reviewRepo.findById(new ReviewKey(paperId,username))).thenReturn(Optional.of(review));
-		when(apiReviewController.getUsernameFromToken()).thenReturn("tarun");
+    	ReviewKey reviewKey = new ReviewKey(1L , "tarun");
+		Review review = new Review(reviewKey);
 		
-		ResponseEntity<Review> responseEntity =  apiReviewController.getReview(paperId);
-		System.out.println(responseEntity);
-		
-		Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+    	
+    	assertEquals(HttpStatus.OK, apiReviewController.getReview(1L).getStatusCode());
+    	  
 		
 		
 	}
