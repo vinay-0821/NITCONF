@@ -1,202 +1,168 @@
 package reviewer.controllers;
 
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+//import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+//import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import reviewer.config.JwtService;
 import reviewer.data.ReviewRepository;
+import reviewer.data.UserRepository;
 import reviewer.model.Review;
-import reviewer.util.ReviewKey;
+import reviewer.model.User;
 import reviewer.rest.ApiReviewController;
+import reviewer.service.JwtExtractor;
 import reviewer.util.ReviewForm;
+import reviewer.util.ReviewKey;
 
-class ApiReviewControllerTest {
 
-	@MockBean
-    private HttpServletRequest request;
+public class ApiReviewControllerTest {
+	
+	
+	@Mock
+	private JwtService jwtService;
 
-    @MockBean
-    private JwtService jwtService;
-
-    @MockBean
-    private ReviewRepository reviewRepo;
-
-    @Autowired
-    private ApiReviewController controller;
-
-    // Helper method to create a mock Review object
-    private Review createMockReview(Long paperId, String username) {
-        Review review = new Review();
-       // review.setId(new ReviewKey(paperId, username));
-        return review;
+	@Mock
+	private HttpServletRequest request;
+	
+	@Mock
+	private UserRepository userRepo;
+	
+	@Mock
+	private ReviewRepository reviewRepo;
+	
+	@Mock 
+	private JwtExtractor jwtExtractor;
+	
+	@InjectMocks
+	private ApiReviewController apiReviewController;
+	
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
+		
     @Test
-    public void testGetReview_Success() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String username = "test_user";
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9..."; // Mock JWT with username
-        Review expectedReview = createMockReview(paperId, username);
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-        when(jwtService.extractUsername(jwtToken)).thenReturn(username);
-        when(reviewRepo.findById(new ReviewKey(paperId, username))).thenReturn(Optional.of(expectedReview));
-
-        // Act
-        ResponseEntity<Review> response = controller.getReview(paperId);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(expectedReview, response.getBody());
-
-        verify(request).getHeader("Authorization");
-        verify(jwtService).extractUsername(jwtToken);
-        verify(reviewRepo).findById(new ReviewKey(paperId, username));
-    }
-
-    @Test
-    public void testGetReview_Unauthorized() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String jwtToken = "invalid_token"; // Mock invalid JWT
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-
-        // Act & Assert
-        assertThrows(Exception.class, () -> controller.getReview(paperId));
-
-        verify(request).getHeader("Authorization");
-        // Not calling jwtService.extractUsername or reviewRepo.findById since token is invalid
-    }
-
-    @Test
-    public void testUpdateReview_Success() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String username = "test_user";
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9..."; // Mock JWT with username
-        Review review = createMockReview(paperId, username);
-        ReviewForm reviewForm = new ReviewForm(); // Mock form data
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-        when(jwtService.extractUsername(jwtToken)).thenReturn(username);
-        when(reviewRepo.findById(new ReviewKey(paperId, username))).thenReturn(Optional.of(review));
-
-        // Act
-        ResponseEntity<Review> response = controller.updateReview(paperId, reviewForm);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        // TODO: Verify update logic on the review object based on reviewForm
-
-        verify(request).getHeader("Authorization");
-        verify(jwtService).extractUsername(jwtToken);
-        verify(reviewRepo).findById(new ReviewKey(paperId, username));
-        // TODO: Verify methods called on the mock review object to update its content
-    }
+	public void getReviewSuccess()
+	{
+    	Long mockPaperId = 1L;
+    	String mockUsername = "tarun";
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+		Review review = new Review(reviewKey);
+		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+    	
+    	assertEquals(HttpStatus.OK, apiReviewController.getReview(mockPaperId).getStatusCode());
+		
+	}
+    
     
     @Test
-    public void testSaveReview_Success() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String username = "test_user";
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9..."; // Mock JWT with username
-        Review review = createMockReview(paperId, username);
-        ReviewForm reviewForm = new ReviewForm(); // Mock form data with filled content
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-        when(jwtService.extractUsername(jwtToken)).thenReturn(username);
-        when(reviewRepo.findById(new ReviewKey(paperId, username))).thenReturn(Optional.of(review));
-        // Mock saving the updated review
-        when(reviewRepo.save(any(Review.class))).thenReturn(review);
-
-        // Act
-        ResponseEntity<Review> response = controller.saveReview(paperId, reviewForm);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        // Verify the response body contains the updated review details based on reviewForm
-        // TODO: Assert specific fields in the response body are updated based on reviewForm
-
-        verify(request).getHeader("Authorization");
-        verify(jwtService).extractUsername(jwtToken);
-        verify(reviewRepo).findById(new ReviewKey(paperId, username));
-        // Verify the review object was saved with updated content
-        verify(reviewRepo).save(review);
-    }
-
+	public void getReviewFailure()
+	{
+        Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.empty());
+    	
+    	assertEquals(HttpStatus.NOT_FOUND, apiReviewController.getReview(mockPaperId).getStatusCode());
+		
+	}
+    
+    
     @Test
-    public void testSaveReview_Unauthorized() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String jwtToken = "invalid_token"; // Mock invalid JWT
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-
-        // Act & Assert
-        assertThrows(Exception.class, () -> controller.saveReview(paperId, new ReviewForm()));
-
-        verify(request).getHeader("Authorization");
-        // Not calling jwtService.extractUsername or reviewRepo.findById since token is invalid
-    }
-
+	public void declineReviewSuccess()
+	{
+        Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+        
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+    	Review review = new Review(reviewKey);
+		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+    	
+    	ResponseEntity<Review> response = apiReviewController.declineReview(mockPaperId);
+    	
+    	assertEquals(HttpStatus.OK, response.getStatusCode());
+    	assertEquals("decline",response.getBody().getReviewerStatus());
+		
+	}
+    
     @Test
-    public void testClearReview_Success() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String username = "test_user";
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9..."; // Mock JWT with username
-        Review review = createMockReview(paperId, username);
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-        when(jwtService.extractUsername(jwtToken)).thenReturn(username);
-        when(reviewRepo.findById(new ReviewKey(paperId, username))).thenReturn(Optional.of(review));
-
-        // Act
-        ResponseEntity<Review> response = controller.clearReview(paperId);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        // TODO: Verify the logic for clearing the review content (if applicable)
-
-        verify(request).getHeader("Authorization");
-        verify(jwtService).extractUsername(jwtToken);
-        verify(reviewRepo).findById(new ReviewKey(paperId, username));
-        // TODO: Verify methods called on the mock review object to clear its content (if applicable)
+    public void clearReviewSuccess()
+    {
+    	Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+         
+     	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+     	Review review = new Review(reviewKey);
+ 		
+     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+     	
+     	ResponseEntity<Review> response = apiReviewController.clearReview(mockPaperId);
+     	
+     	assertEquals(HttpStatus.OK, response.getStatusCode());
+     	assertEquals("new" , response.getBody().getReviewStatus());
+     	assertEquals(true, response.getBody().checkReviewForm(new ReviewForm()));
+     	
     }
-
+    
+    
     @Test
-    public void testClearReview_Unauthorized() throws Exception {
-        // Arrange
-        Long paperId = 1L;
-        String jwtToken = "invalid_token"; // Mock invalid JWT
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwtToken);
-
-        // Act & Assert
-        assertThrows(Exception.class, () -> controller.clearReview(paperId));
-
-        verify(request).getHeader("Authorization");
-        // Not calling jwtService.extractUsername or reviewRepo.findById since token is invalid
+    public void saveReviewForm()
+    {
+    	Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+         
+     	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+     	Review review = new Review(reviewKey);
+ 		
+     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+     	
+     	ResponseEntity<Review> response = apiReviewController.updateReview(mockPaperId, new ReviewForm());
+     	
+     	assertEquals(HttpStatus.OK, response.getStatusCode());
+     	assertEquals("draft" , response.getBody().getReviewStatus());
+     	assertEquals(true, response.getBody().checkReviewForm(new ReviewForm()));
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
