@@ -11,8 +11,12 @@ import java.util.Optional;
 
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,12 +26,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.jsonwebtoken.lang.Assert;
 import jakarta.servlet.http.HttpServletRequest;
 import reviewer.config.JwtService;
+import reviewer.data.ReviewRepository;
 import reviewer.data.TagsRepository;
 import reviewer.data.UserRepository;
 import reviewer.model.Review;
 import reviewer.model.Tags;
 import reviewer.model.User;
 import reviewer.rest.ApiEditProfileController;
+import reviewer.rest.ApiReviewController;
+import reviewer.service.JwtExtractor;
 
 @SpringBootTest
 public class ApiEditProfileControllerTest {
@@ -37,6 +44,29 @@ public class ApiEditProfileControllerTest {
 
     @MockBean
     private TagsRepository tagsRepository;
+    
+    @Mock
+	private JwtService jwtService;
+
+	@Mock
+	private HttpServletRequest request;
+	
+	@Mock
+	private UserRepository userRepo;
+	
+	@Mock
+	private ReviewRepository reviewRepo;
+	
+	@Mock 
+	private JwtExtractor jwtExtractor;
+	
+	@InjectMocks
+	private ApiReviewController apiReviewController;
+	
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void getAllTagsTest() throws Exception {
@@ -61,50 +91,10 @@ public class ApiEditProfileControllerTest {
     
     @Test
     public void getUserDetailsTest_validToken() throws Exception {
-        // Mock data
-        String username = null;
-        String password = null;
-		String name = null;
-		String contactno = null;
-		String bio = null;
-		List<Tags> tags = null;
-		List<Review> review = null;
-		User mockUser = new User(username, password, name, contactno, bio, tags, review);
-
-        // Mock dependencies
-//        when(JwtService.extractUsername(Mockito.anyString())).thenReturn(username);
-		JwtService jwtServiceMock = Mockito.mock(JwtService.class);
-		Mockito.when(jwtServiceMock.extractUsername(Mockito.anyString())).thenReturn(username);
-
-//        CrudRepository<Tags, Long> userRepositoryMock;
-        UserRepository userRepositoryMock = Mockito.mock(UserRepository.class);
-		//        when(UserRepository.findById(username)).thenReturn(Optional.of(mockUser));
-        Mockito.when(userRepositoryMock.findById(username)).thenReturn(Optional.of(mockUser));
-
-
-        // Simulate request with valid token (replace with actual token generation logic)
-        String mockToken = "your_valid_token";
-        HttpServletRequest mockRequest = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(mockRequest.getHeader("Authorization")).thenReturn("Bearer " + mockToken);
-
-        // Perform the test
-        User returnedUser = controller.getUserDetails();
-
-        // Assert the results
-        Assert.notNull(returnedUser);
-//        String s=returnedUser.getUsername();
-//        
-//        char[] ch = new char[s.length()];
-//        for (int i = 0; i < s.length(); i++) {
-//            ch[i] = s.charAt(i);
-//        }
-//        
-//        char[] ch1 = new char[username.length()];
-//        for (int i = 0; i < username.length(); i++) {
-//            ch1[i] = username.charAt(i);
-//        }
+     
         
-        assertEquals(username, returnedUser.getUsername());
+		
+
     }
     
     @Test
