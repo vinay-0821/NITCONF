@@ -11,10 +11,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-<<<<<<< Upstream, based on branch 'main' of git@github.com:avinashravanam/NITCONF.git
-//import org.junit.runner.RunWith;
-=======
->>>>>>> 07d8df1 testing completed
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
