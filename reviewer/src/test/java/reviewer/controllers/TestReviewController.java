@@ -67,15 +67,39 @@ public class TestReviewController {
     @Test
 	public void GetReview_Success()
 	{
-    	ReviewKey reviewKey = new ReviewKey(1L , "tarun");
+    	Long mockPaperId = 1L;
+    	String mockUsername = "tarun";
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
 		Review review = new Review(reviewKey);
 		
-    	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
     	
-    	assertEquals(HttpStatus.OK, apiReviewController.getReview(1L).getStatusCode());
-    	  
-		
+    	assertEquals(HttpStatus.OK, apiReviewController.getReview(mockPaperId).getStatusCode());
 		
 	}
+    
+    
+    @Test
+	public void GetReview_Failure()
+	{
+        Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.empty());
+    	
+    	assertEquals(HttpStatus.NOT_FOUND, apiReviewController.getReview(mockPaperId).getStatusCode());
+		
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
