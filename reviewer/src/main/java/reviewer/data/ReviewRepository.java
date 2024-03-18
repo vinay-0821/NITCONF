@@ -16,6 +16,8 @@ public interface ReviewRepository extends JpaRepository<Review,ReviewKey> {
 	ArrayList<Review> findAllByIdUserId(String userId);
 	Optional<Review> findById(ReviewKey reviewKey);
 	ArrayList<Review> findAllByIdUserIdAndReviewStatus(String userId, String reviewStatus);
+	ArrayList<Review> findAllByIdUserIdAndReviewerStatus(String username, String string);
+
 	
 
 }

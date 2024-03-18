@@ -9,19 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
 import reviewer.config.JwtService;
 import reviewer.data.PaperRepository;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Paper;
 import reviewer.model.Review;
+import reviewer.service.JwtExtractor;
 
 
 @RestController
 @RequestMapping(path="/api" , produces="application/json")
-public class ApiToReviewController {
+public class ApiReviewCenterController {
 	
 
 	
@@ -37,6 +36,9 @@ public class ApiToReviewController {
 	@Autowired
 	private PaperRepository paperRepo;
 	
+	@Autowired 
+	private JwtExtractor jwtExtractor;
+	
 	
 	
 	private String getUsernameFromToken()
@@ -49,18 +51,12 @@ public class ApiToReviewController {
 	
 	
 	@GetMapping("/get-to-review")
-	public Iterable<Review> toReview()
+	public Iterable<Review> getToReview()
 	{
 		
-		String username = getUsernameFromToken();
+		String username = jwtExtractor.getUsernameFromToken();
 		ArrayList<Review> reviewList = new ArrayList<Review>();
-		
-		//search by status also
-		reviewList= reviewRepo.findAllByIdUserId(username);
-		for(Review review : reviewList)
-		{
-			System.out.println(review.toString());
-		}
+		reviewList= reviewRepo.findAllByIdUserIdAndReviewerStatus(username,"accept");
 	    return reviewList;
 	}
 	
@@ -82,14 +78,6 @@ public class ApiToReviewController {
 
 	
 
+
 }
 
-
-
-//	@Operation(
-//    tags = {"Papers Yet to Review"},
-//    operationId = "findPapers",
-//    summary = "Find Papers",
-//    description = "Search for papers assigned to a user which are yet to be reviewed and display if present.",
-//    parameters = @Parameter(name="username" ,description = "The username of the user for whom papers are to be searched." , example="jonny")
-//)

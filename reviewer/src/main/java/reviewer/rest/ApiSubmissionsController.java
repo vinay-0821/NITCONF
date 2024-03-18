@@ -24,6 +24,7 @@ import reviewer.config.JwtService;
 import reviewer.data.ReviewRepository;
 import reviewer.model.Review;
 import reviewer.model.User;
+import reviewer.service.JwtExtractor;
 import reviewer.util.ReviewForm;
 import reviewer.util.ReviewKey;
 
@@ -40,6 +41,9 @@ public class ApiSubmissionsController {
 	@Autowired
 	private ReviewRepository reviewRepo;
 	
+	@Autowired
+	private JwtExtractor jwtExtractor;
+	
 	
 	
 	private String getUsernameFromToken()
@@ -53,20 +57,47 @@ public class ApiSubmissionsController {
 
 	
 	@GetMapping("/get-submissions")
-	public Iterable<Review> drafts() 
+	public Iterable<Review> getSubmissions() 
 	{
-	    System.out.println("get mapping ");
-	    String username = getUsernameFromToken();
+
+	    String username = jwtExtractor.getUsernameFromToken();
 		ArrayList<Review> submissionsList = new ArrayList<Review>();
+		
 		//TODO change to accepted only
      	submissionsList = reviewRepo.findAllByIdUserIdAndReviewStatus(username,"submit");    
 		return submissionsList;
 	}
 	
+	@GetMapping("/delete-submission")
+	public ResponseEntity<Review> deleteSubmission(@RequestParam("paperId") Long paperId)
+	{
+		
+
+		String username = jwtExtractor.getUsernameFromToken();
+        Optional<Review> optReview = reviewRepo.findById(new ReviewKey(paperId,username));
+	     
+	     if(optReview.isPresent() == false)
+	     {
+	    	 return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);   
+	     }
+	     
+	        
+	     Review review = optReview.get();
+	     review.modifyReview(new ReviewForm());
+	     review.setSubmissionTime(null);
+	     review.setReviewStatus("new");
+	     reviewRepo.save(review);
+		 return new ResponseEntity<>(review,HttpStatus.OK);
+		 
+	}
+	
+	
+	
+	
 	@PostMapping("/edit-submission")
 	public ResponseEntity<Review> editSubmission(@RequestParam("paperId") Long paperId,@RequestBody ReviewForm reviewForm )
 	{
-		String username = getUsernameFromToken();
+		String username = jwtExtractor.getUsernameFromToken();
         Optional<Review> optReview = reviewRepo.findById(new ReviewKey(paperId,username));
 	     
 	     if(optReview.isPresent() == false)
@@ -82,21 +113,12 @@ public class ApiSubmissionsController {
 	     review.modifyReview(reviewForm);
 	     review.setSubmissionTime(Calendar.getInstance());
 	     review.setReviewStatus("submit");
-	     
-	    /* System.out.println(review.getSubmissionTime());
-	     System.out.println(review.getSubmissionTime().get(Calendar.HOUR));
-	     System.out.println(review.getSubmissionTime().get(Calendar.MINUTE));
-	     System.out.println(review.getSubmissionTime().get(Calendar.SECOND));
-	     System.out.println(review.getSubmissionTime().get(Calendar.YEAR));
-		 Calendar deadline = Calendar.getInstance();
-		 deadline.set(2024,03,18,12,0,0);
-         review.setDeadline(deadline);*/
 	     reviewRepo.save(review);
 		
-	   
-		   
 		 return new ResponseEntity<>(review,HttpStatus.OK);
 	}
+	
+	
 	
 
 }
