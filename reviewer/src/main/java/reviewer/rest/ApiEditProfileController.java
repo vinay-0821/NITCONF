@@ -21,6 +21,7 @@ import reviewer.data.TagsRepository;
 import reviewer.data.UserRepository;
 import reviewer.model.Tags;
 import reviewer.model.User;
+import reviewer.service.JwtExtractor;
 import reviewer.util.ReviewForm;
 
 
@@ -40,6 +41,9 @@ public class ApiEditProfileController {
 	@Autowired
 	private TagsRepository tagsRepo;
 	
+	@Autowired
+	private JwtExtractor jwtExtractor;
+	
 	
 	
 	@GetMapping("/all-tags")
@@ -52,16 +56,7 @@ public class ApiEditProfileController {
 	@GetMapping("/get-profile")
 	public User getUserDetails()
 	{
-		
-		System.out.println("getuserdeatilas");
-		String authHeader = request.getHeader("Authorization");
-	    
-//	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {     // no need of this as token will be verified before
-//	      return null;
-//	    }
-
-	   String jwt = authHeader.substring(7);  
-	   String username = jwtService.extractUsername(jwt);
+	    String username = jwtExtractor.getUsernameFromToken();
 	   Optional<User> optUser = userRepo.findById(username);
 		
 		if(optUser.isPresent())
@@ -77,17 +72,7 @@ public class ApiEditProfileController {
 	public ResponseEntity<User> editProfile(@RequestBody User user1)
 	{
 		
-		System.out.println(user1);
-
-		String authHeader = request.getHeader("Authorization");
-	    
-//	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {     // no need of this as token will be verified before
-//	      return null;
-//	    }
-		   
-	   //save only the changed ones
-	   String jwt = authHeader.substring(7);  
-	   String username = jwtService.extractUsername(jwt);
+	   String username = jwtExtractor.getUsernameFromToken();
 	   Optional<User> optUser = userRepo.findById(username);
 	   System.out.println(user1.getUsername());
 		System.out.println(username);
