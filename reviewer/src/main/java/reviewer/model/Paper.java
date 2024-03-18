@@ -34,6 +34,16 @@ public class Paper {
 	@OneToMany(mappedBy= "paper")
 	private List<Review> review;                           //change to set?
 
+	public Paper()
+	{
+		
+	}
+	
+	
+	public Paper(Long id)
+	{
+	    this.id = id;
+	}
 	
 	
 	public Long getId() {
