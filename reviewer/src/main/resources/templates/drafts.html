@@ -17,7 +17,10 @@
             <div class="logo left">
              <!-- <i id="menu" class="material-icons">menu</i>  -->
              <!-- <img src="https://www.freecodecamp.org/news/content/images/2022/01/yt-logo.png"> -->
-              <a class="navbar-brand" id="dashboard">NITCONF</a>
+             
+             <a class="navbar-brand text-light" id="dashboard" ><h4><strong>
+				 <img id="logoImage" src=" " alt=" " width="25" heigth="25" />
+				 NITCONF</strong></h4></a>
             </div>
             
             <div class="search center">
@@ -71,14 +74,14 @@
       <main>
             <div class="side-bar">
                 <div class="nav">
-                    <a id="side-review-center" class="nav-link">
-                        Review Center
+                    <a id="side-review-center" class="nav-link text-dark font-italic">
+                        <strong>Review Center</strong>
                     </a>
-                    <a  id="side-drafts" class="nav-link">
-                        Drafts
+                    <a  id="side-drafts" class="nav-link text-dark">
+                        <strong>Drafts</strong>
                     </a>
-                    <a id="side-submissions" class="nav-link">
-                        Submissions
+                    <a id="side-submissions" class="nav-link text-dark">
+                        <strong>Submissions</strong>
                     </a>
                 </div>
                 <hr>
@@ -310,6 +313,7 @@
 		   document.getElementById("side-drafts").setAttribute("href", `/api/drafts?token=${token}`);
 		   document.getElementById("side-submissions").setAttribute("href", `/api/submissions?token=${token}`);
 		   document.getElementById("dashboard").setAttribute("href", `/api/dashboard?token=${token}`);
+		   document.getElementById("logoImage").setAttribute("src", `/images/logoww.png?token=${token}`);
 
 		   
 		   
