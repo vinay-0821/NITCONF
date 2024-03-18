@@ -33,6 +33,7 @@ import reviewer.model.Review;
 import reviewer.model.User;
 import reviewer.rest.ApiReviewController;
 import reviewer.service.JwtExtractor;
+import reviewer.util.ReviewForm;
 import reviewer.util.ReviewKey;
 
 
@@ -64,17 +65,103 @@ public class TestReviewController {
 
 		
     @Test
-	public void GetReview_Success()
+	public void getReviewSuccess()
 	{
-    	ReviewKey reviewKey = new ReviewKey(1L , "tarun");
+    	Long mockPaperId = 1L;
+    	String mockUsername = "tarun";
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
 		Review review = new Review(reviewKey);
+		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+    	
+    	assertEquals(HttpStatus.OK, apiReviewController.getReview(mockPaperId).getStatusCode());
+		
+	}
+    
+    
+    @Test
+	public void getReviewFailure()
+	{
+        Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+		
+    	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+    	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.empty());
+    	
+    	assertEquals(HttpStatus.NOT_FOUND, apiReviewController.getReview(mockPaperId).getStatusCode());
+		
+	}
+    
+    
+    @Test
+	public void declineReviewSuccess()
+	{
+        Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+        
+    	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+    	Review review = new Review(reviewKey);
 		
     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
     	
-    	assertEquals(HttpStatus.OK, apiReviewController.getReview(1L).getStatusCode());
-    	  
-		
+    	ResponseEntity<Review> response = apiReviewController.declineReview(mockPaperId);
+    	
+    	assertEquals(HttpStatus.OK, response.getStatusCode());
+    	assertEquals("decline",response.getBody().getReviewerStatus());
 		
 	}
+    
+    @Test
+    public void clearReviewSuccess()
+    {
+    	Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+         
+     	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+     	Review review = new Review(reviewKey);
+ 		
+     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+     	
+     	ResponseEntity<Review> response = apiReviewController.clearReview(mockPaperId);
+     	
+     	assertEquals(HttpStatus.OK, response.getStatusCode());
+     	assertEquals("new" , response.getBody().getReviewStatus());
+     	assertEquals(true, response.getBody().checkReviewForm(new ReviewForm()));
+     	
+    }
+    
+    
+    @Test
+    public void saveReviewForm()
+    {
+    	Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+         
+     	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+     	Review review = new Review(reviewKey);
+ 		
+     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.of(review));
+     	
+     	ResponseEntity<Review> response = apiReviewController.updateReview(mockPaperId, new ReviewForm());
+     	
+     	assertEquals(HttpStatus.OK, response.getStatusCode());
+     	assertEquals("draft" , response.getBody().getReviewStatus());
+     	assertEquals(true, response.getBody().checkReviewForm(new ReviewForm()));
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
