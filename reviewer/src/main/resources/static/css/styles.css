@@ -44,6 +44,12 @@
     display: flex;
     align-items: center;
    }
+   
+   .right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+   }
 
    .navbar-brand {
      padding: 0 7px;
