@@ -37,7 +37,7 @@ import reviewer.rest.ApiEditProfileController;
 import reviewer.rest.ApiReviewController;
 import reviewer.service.JwtExtractor;
 
-@SpringBootTest
+//@SpringBootTest
 public class ApiEditProfileControllerTest {
 
 
@@ -122,8 +122,6 @@ public class ApiEditProfileControllerTest {
 		
     }
     
-    public User setUsername(String username){
-    	return new User();
-    }
+
 
 }
