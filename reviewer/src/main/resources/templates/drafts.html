@@ -179,10 +179,45 @@
 		   
 		   function getFormatDate(date)
 		   {
-			   const formatDate = date.getDate()+'/'+ date.getMonth()+'/'+ date.getYear()+" "+ date.getHours()+":"+ date.getMinutes()+":"+ date.getSeconds();
-			   return formatDate;
+			   return date.toDateString();
 			   
 		   }
+		   
+		   function getFormatTime(date)
+		   {
+			   let formatTime = "";
+			   if(date.getHours() == "0")
+			   {
+				   formatTime += "00:"
+			   }
+			   else
+			   {
+				   formatTime += date.getHours() + ":"
+			   }
+			   
+			   if(date.getMinutes() == "0")
+			   {
+				   formatTime += "00:"
+			   }
+			   else
+			   {
+				   formatTime += date.getMinutes() + ":"
+			   }
+			   
+			   if(date.getSeconds() == "0")
+			   {
+				   formatTime += "00"
+			   }
+			   else
+			   {
+				   formatTime += date.getSeconds()
+			   }
+			   
+			   return formatTime
+			   
+			   
+		   }
+		   
 		   
 		   async function getDataFromURL(url)
 		   {
@@ -232,8 +267,15 @@
 				  console.log(review[i])
 				  const paper = await getDataFromURL(`http://localhost:8080/api/get-paper?paperId=${review[i].id.paperId}`)
 				  console.log(paper)
-				  const deadline = new Date(review[i].deadline)
-				  //const deadline = getFormatDate(new Date(review[i].deadline))
+				 
+				  let deadline = getFormatDate(new Date(review[i].deadline)) + "  " + getFormatTime(new Date(review[i].deadline))
+				  
+				  
+				  
+				 /* let deadline = new Date(review[i].deadline)
+				  deadline  = getFormatTime(deadline)
+				  
+				  console.log(deadline)*/
 				  
       
                   
@@ -307,6 +349,7 @@
 		   async function clearReview(url)
 		   {
 			  getDataFromURL(url)
+			  //again for reload
 			  window.location.href = `http://localhost:8080/api/drafts?token=${token}`
 			 
 		   }

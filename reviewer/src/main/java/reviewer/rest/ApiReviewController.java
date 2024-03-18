@@ -100,6 +100,7 @@ public class ApiReviewController {
 		}
 	    
 	    
+	    
 	    @GetMapping("/clear")
 		public ResponseEntity<Review> clearReview(@RequestParam("paperId") Long paperId)
 		{

@@ -130,7 +130,46 @@
     <script>
 		
 		 const token = localStorage.getItem("token") 
-		 
+		 function getFormatDate(date)
+		   {
+			   return date.toDateString();
+			   
+		   }
+		   
+		   function getFormatTime(date)
+		   {
+			   let formatTime = "";
+			   if(date.getHours() == "0")
+			   {
+				   formatTime += "00:"
+			   }
+			   else
+			   {
+				   formatTime += date.getHours() + ":"
+			   }
+			   
+			   if(date.getMinutes() == "0")
+			   {
+				   formatTime += "00:"
+			   }
+			   else
+			   {
+				   formatTime += date.getMinutes() + ":"
+			   }
+			   
+			   if(date.getSeconds() == "0")
+			   {
+				   formatTime += "00"
+			   }
+			   else
+			   {
+				   formatTime += date.getSeconds()
+			   }
+			   
+			   return formatTime
+			   
+			   
+		   }
 		    async function getDataFromURL(url)
 		   {
 			  const data = await fetch(url, 
@@ -155,6 +194,7 @@
 			     
 		   }
 		   
+		   
 		   function getFromStatus(status)
 		   {
 			   if(status == 'draft')
@@ -171,6 +211,8 @@
 		   
 		   async function setReviewDetails(review)
 		   {
+			   
+			  
 			  const element = document.getElementById('table')
 			  innerHTML = `<div class="row bg-light bg-gradient">
 				            <div class="col-md-1 border text-center  py-2">
@@ -193,6 +235,9 @@
 				  console.log(review[i])
 				  const paper = await getDataFromURL(`http://localhost:8080/api/get-paper?paperId=${review[i].id.paperId}`)
 				  console.log(paper)
+				  
+				  let deadline = getFormatDate(new Date(review[i].deadline)) + "  " + getFormatTime(new Date(review[i].deadline))
+                  let submissionTime = getFormatDate(new Date(review[i].submissionTime)) + "  " + getFormatTime(new Date(review[i].submissionTime))
 				  
 				 innerHTML +=  `<div class="row">
 		                          <div class="col-md-1 border px-1 py-2">
@@ -221,14 +266,15 @@
 		                          </div>
 		                          </div>
 						            <div class="col-md-3 border py-2 text-center">
-						                <p class="h6 font-weight-normal">${paper.deadline}</p>
+						                <p class="h6 font-weight-normal">${deadline}</p>
 						            </div>
 						            
-						            <div class="col-md border py-2">
-						
-						              <a href="/api/review/view?paperId=${paper.id}&token=${token}"><button class="btn btn-primary m-1">Review</button></a>
-					                  <a><button class="btn btn-danger m-1">Decline</button></a>
-						
+						            <div class="col-md border py-2 d-flex flex-column justify-content-center">
+						             
+						             <div class="container text-center">
+						              <a class="justify-content-center" href="/api/review/view?paperId=${paper.id}&token=${token}"><button class="btn btn-primary m-1">Review</button></a>
+					                  <a class="justify-content-center" onclick="declineReview("/api/review/decline?paperId=${paper.id}&token=${token}")"><button class="btn btn-danger m-1">Decline</button></a>
+						             </div>
 				
 						            </div>
 						        </div>`
@@ -248,6 +294,13 @@
 		   }
 		   
 		   displayReview()
+		   
+		  async function declineReview(url)
+		  {
+			  const review = await getDataFromURL(url)
+			  window.location.href = `/api/review-center?token=${token}`
+		  }
+		  
 		   
 		   document.getElementById("profile").setAttribute("href", `/api/profile?token=${token}`);
 		   document.getElementById("styles").setAttribute("href", `/css/styles.css?token=${token}`);
