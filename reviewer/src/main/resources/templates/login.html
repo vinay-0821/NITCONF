@@ -74,15 +74,14 @@
 				      // window.location.assign("dashboard.html");
 				     })
 					 .catch((error) => {
-						  console.error(error);
+						  var element = document.getElementById("invalid");
+			              element.classList.remove("d-none");
+					      console.log(error)
+			
 						});
 			          //token needed here store it in http header
 			        })
-				   .catch(error =>{ 
-					 var element = document.getElementById("invalid");
-			         element.classList.remove("d-none");
-					 console.log(error)
-				   });
+				   
 				   
 				   
 				   /*function login()
