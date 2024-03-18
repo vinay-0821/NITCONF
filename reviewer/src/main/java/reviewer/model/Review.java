@@ -93,14 +93,6 @@ public class Review {
 	}
 	
 
-	public Review(ReviewKey reviewKey) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Review() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void modifyReview(ReviewForm review) {
 
  		this.originality = review.getOriginality();
