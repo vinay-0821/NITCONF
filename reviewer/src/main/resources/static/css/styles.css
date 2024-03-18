@@ -34,11 +34,6 @@
     overflow-y: hidden;
   } 
 
-  @media (max-width: 768px) {
-    .side-bar {
-      display: none;
-    }
-  }
 
   .left {
     display: flex;
