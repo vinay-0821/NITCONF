@@ -120,8 +120,8 @@
                                 <div class="m-2">
                                     <span class="h6 d-inline">Deadline:</span> <span id="deadline"></span><br>
                                 </div>
-                                <div class="m-2">
-                                    <span class="h6 d-inline">Submitted on:</span> <span class="d-none" id="submissionTime"></span><br>
+                                <div class="m-2 d-none" id="submissionTimeDiv">
+                                    <span class="h6 d-inline" >Submitted on:</span> <span id="submissionTime"></span><br>
                                 </div>
                             </div>
                          </div>
@@ -295,8 +295,48 @@
 		const searchParams = new URLSearchParams(window.location.search)
 		const paperId = searchParams.get("paperId")
 		
-		document.getElementById("cancel").setAttribute("href", `/api/review-center?token=${token}`)
 		
+		
+				 function getFormatDate(date)
+		   {
+			   return date.toDateString();
+			   
+		   }
+		   
+		   function getFormatTime(date)
+		   {
+			   let formatTime = "";
+			   if(date.getHours() == "0")
+			   {
+				   formatTime += "00:"
+			   }
+			   else
+			   {
+				   formatTime += date.getHours() + ":"
+			   }
+			   
+			   if(date.getMinutes() == "0")
+			   {
+				   formatTime += "00:"
+			   }
+			   else
+			   {
+				   formatTime += date.getMinutes() + ":"
+			   }
+			   
+			   if(date.getSeconds() == "0")
+			   {
+				   formatTime += "00"
+			   }
+			   else
+			   {
+				   formatTime += date.getSeconds()
+			   }
+			   
+			   return formatTime
+			   
+			   
+		   }
 		
 		function setValue(id,value)
 		{
@@ -353,7 +393,7 @@
 		 
 		 function modifyOnReviewStatus(review)
 		 {
-			 document.getElementById("deadline").textContent = review.deadline;
+			 document.getElementById("deadline").textContent = getFormatDate(new Date(review.deadline)) + "  " + getFormatTime(new Date(review.deadline));
 		    
 			 if(review.reviewStatus == 'submit')
 			 {
@@ -361,8 +401,9 @@
 				//document.getElementById("reviewStatus").classList.add("text-success")
 				
 				const submissionTime =  document.getElementById("submissionTime")
-				submissionTime.classList.remove("d-none")
-				submissionTime.textContent = review.submissionTime;
+				submissionTime.textContent = getFormatDate(new Date(review.submissionTime)) + "  " + getFormatTime(new Date(review.submissionTime));
+				document.getElementById("submissionTimeDiv").classList.remove("d-none")
+				
 				
 				
 				document.getElementById("submission").classList.add("d-none")
@@ -498,7 +539,13 @@
 		 document.getElementById("side-drafts").setAttribute("href", `/api/drafts?token=${token}`);
 		 document.getElementById("side-submissions").setAttribute("href", `/api/submissions?token=${token}`);
 		 document.getElementById("dashboard").setAttribute("href", `/api/dashboard?token=${token}`);
+
          document.getElementById("logoImage").setAttribute("src", `/images/logoww.png?token=${token}`);
+
+		 
+		 document.getElementById("cancel").setAttribute("href", `/api/review-center?token=${token}`)
+		 
+
 		 
 		 
 			  

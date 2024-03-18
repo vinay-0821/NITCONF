@@ -30,6 +30,7 @@ public class ApiDraftController {
 	
 	@Autowired
 	private JwtExtractor jwtExtractor;
+
 	
 	
 	
@@ -50,13 +51,6 @@ public class ApiDraftController {
 
 	
 	@GetMapping
-	@Operation(
-		    tags = {"Drafts and Submissions"},
-		    operationId = "",
-		    summary = "Find drafts",
-		    description = "Retrieve drafts associated with the provided username.",
-		    parameters = @Parameter(name="username" ,description = "The username for which to retrieve drafts.",example="jonny")
-		)
 	public Iterable<Review> drafts() 
 	{
 	   
