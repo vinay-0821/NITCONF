@@ -160,6 +160,31 @@ public class ApiEditProfileControllerTest {
 		
     }
     
+    @Test
+    public void editprofileInvalidUsername() throws Exception {
+        String mockUsername = "tarun";
+    	
+		User user= new User();
+		user.setUsername(mockUsername);
+		
+		User paramUser = new User();
+		
+		paramUser.setUsername("koushik");
+		paramUser.setBio("i am interested in java");
+	
+		when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
+		when(userRepo.findById(mockUsername)).thenReturn(Optional.of(user));
+		
+		
+        ResponseEntity<User> response = apiEditProfileController.editProfile(paramUser);
+    	
+    	assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+  
+    	
+		
+		
+    }
+    
     
     
 }

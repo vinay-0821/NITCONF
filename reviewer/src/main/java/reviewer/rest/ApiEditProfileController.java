@@ -87,9 +87,14 @@ public class ApiEditProfileController {
 			{
 				user.modify(user1);
 				userRepo.save(user);
+				return new ResponseEntity<>(user,HttpStatus.OK);
+			}
+			else
+			{
+				return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 			}
 				
-			return new ResponseEntity<>(user,HttpStatus.OK);	
+				
 		}
 		
 		return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
