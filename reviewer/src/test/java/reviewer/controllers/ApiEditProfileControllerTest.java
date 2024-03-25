@@ -109,7 +109,7 @@ public class ApiEditProfileControllerTest {
     }
     
     @Test
-    public void editprofile() throws Exception {
+    public void editprofileSuccess() throws Exception {
     	String mockUsername = "tarun";
     	
 		User user= new User();
@@ -135,5 +135,31 @@ public class ApiEditProfileControllerTest {
 
     }
 
-
+    
+    @Test
+    public void editprofileFailure() throws Exception {
+    	String mockUsername = "tarun";
+    	
+		User user= new User();
+		user.setUsername(mockUsername);
+		
+		User paramUser = new User();
+		
+		paramUser.setUsername(mockUsername);
+		paramUser.setBio("i am interested in java");
+	
+		when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
+		when(userRepo.findById(mockUsername)).thenReturn(Optional.empty());
+		
+		
+        ResponseEntity<User> response = apiEditProfileController.editProfile(paramUser);
+    	
+    	assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    	
+		
+		
+    }
+    
+    
+    
 }

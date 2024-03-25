@@ -88,6 +88,17 @@ public class ApiReviewCenterControllerTest {
     	
     }
     
+    @Test
+    public void getPaperTestFailure()
+    {
+    	Long mockPaperId = 1L;
+    	
+    	when(paperRepo.findPaperById(mockPaperId)).thenReturn(Optional.empty());
+    	
+    	assertEquals(null,apiReviewCenterController.getPaper(mockPaperId));
+    	
+    }
+    
     
 
 
