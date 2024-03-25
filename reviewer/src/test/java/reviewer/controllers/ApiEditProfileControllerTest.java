@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.jsonwebtoken.lang.Assert;
@@ -39,8 +40,6 @@ import reviewer.service.JwtExtractor;
 
 //@SpringBootTest
 public class ApiEditProfileControllerTest {
-
-
 
     @Mock
     private TagsRepository tagsRepository;
@@ -72,9 +71,8 @@ public class ApiEditProfileControllerTest {
     public void getAllTagsTest() throws Exception {
         // Mock data
         List<Tags> mockTags = new ArrayList<>();
-        Long id1 = null;
-		mockTags.add(new Tags(id1, "tag1"));
-        mockTags.add(new Tags(id1, "tag2"));
+		mockTags.add(new Tags(1L, "tag1"));
+        mockTags.add(new Tags(2L, "tag2"));
 
         Mockito.when(tagsRepository.findAll()).thenReturn((ArrayList<Tags>) mockTags);
 
@@ -113,13 +111,29 @@ public class ApiEditProfileControllerTest {
     @Test
     public void editprofile() throws Exception {
     	String mockUsername = "tarun";
+    	
 		User user= new User();
 		user.setUsername(mockUsername);
+		
+		User paramUser = new User();
+		
+		paramUser.setUsername(mockUsername);
+		paramUser.setBio("i am interested in java");
 	
 		when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
 		when(userRepo.findById(mockUsername)).thenReturn(Optional.of(user));
+
+		
+		
+        ResponseEntity<User> response = apiEditProfileController.editProfile(paramUser);
+    	
+    	assertEquals(HttpStatus.OK, response.getStatusCode());
+    	assertEquals(paramUser, response.getBody());
+    	
+		
+		
+
     }
-    
 
 
 }
