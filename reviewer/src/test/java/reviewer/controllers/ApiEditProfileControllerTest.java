@@ -118,8 +118,6 @@ public class ApiEditProfileControllerTest {
 	
 		when(jwtExtractor.getUsernameFromToken()).thenReturn(mockUsername);
 		when(userRepo.findById(mockUsername)).thenReturn(Optional.of(user));
-		
-		
     }
     
 
