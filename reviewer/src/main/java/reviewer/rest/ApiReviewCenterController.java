@@ -40,16 +40,6 @@ public class ApiReviewCenterController {
 	private JwtExtractor jwtExtractor;
 	
 	
-	
-	private String getUsernameFromToken()
-	{
-	    String authHeader = request.getHeader("Authorization");
-	    String jwt = authHeader.substring(7);  
-	    String username = jwtService.extractUsername(jwt);
-	    return username;
-	}
-	
-	
 	@GetMapping("/get-to-review")
 	public Iterable<Review> getToReview()
 	{

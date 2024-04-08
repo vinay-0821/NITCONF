@@ -32,24 +32,6 @@ public class ApiDraftController {
 	private JwtExtractor jwtExtractor;
 
 	
-	
-	
-	public String getUsernameFromToken()
-	{
-	    String authHeader = request.getHeader("Authorization");
-		    
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {  
-        	
-          return null;
-        }
-	    System.out.println("authHeader " + authHeader);
-	    String jwt = authHeader.substring(7);  
-	    String username = jwtService.extractUsername(jwt);
-	    System.out.println("username " + username);
-	    return username;
-	}
-
-	
 	@GetMapping
 	public Iterable<Review> drafts() 
 	{

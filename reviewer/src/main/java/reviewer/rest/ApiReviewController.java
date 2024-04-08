@@ -44,23 +44,6 @@ public class ApiReviewController {
 		@Autowired
 		private JwtExtractor jwtExtractor;
 		
-		
-		
-		public String getUsernameFromToken()
-		{
-		    String authHeader = request.getHeader("Authorization");
-			    
-	        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {  
-	        	
-	          return null;
-	        }
-		    System.out.println("authHeader " + authHeader);
-		    String jwt = authHeader.substring(7);  
-		    String username = jwtService.extractUsername(jwt);
-		    System.out.println("username " + username);
-		    return username;
-		}
-		
 	 
 	 
 	    @GetMapping("/get")
@@ -79,6 +62,7 @@ public class ApiReviewController {
 		    
 		}
 	    
+	    
 	    @GetMapping("/decline")
 		public ResponseEntity<Review> declineReview(@RequestParam("paperId") Long paperId)
 		{
@@ -93,7 +77,8 @@ public class ApiReviewController {
 		     }
 		     
 		     Review review = optReview.get();
-		     review.setReviewerStatus("decline");     
+		     review.setReviewerStatus("decline");  
+		     reviewRepo.save(review);
 		     
 			 return new ResponseEntity<>(review,HttpStatus.OK);
 		    
