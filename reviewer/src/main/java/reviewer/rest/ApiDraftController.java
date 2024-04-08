@@ -32,11 +32,6 @@ public class ApiDraftController {
 	private JwtExtractor jwtExtractor;
 
 	
-	
-	
-	
-
-	
 	@GetMapping
 	public Iterable<Review> drafts() 
 	{

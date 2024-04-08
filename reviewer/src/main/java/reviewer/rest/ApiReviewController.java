@@ -62,6 +62,7 @@ public class ApiReviewController {
 		    
 		}
 	    
+	    
 	    @GetMapping("/decline")
 		public ResponseEntity<Review> declineReview(@RequestParam("paperId") Long paperId)
 		{
@@ -76,7 +77,8 @@ public class ApiReviewController {
 		     }
 		     
 		     Review review = optReview.get();
-		     review.setReviewerStatus("decline");     
+		     review.setReviewerStatus("decline");  
+		     reviewRepo.save(review);
 		     
 			 return new ResponseEntity<>(review,HttpStatus.OK);
 		    

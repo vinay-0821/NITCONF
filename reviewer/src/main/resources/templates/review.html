@@ -395,7 +395,17 @@
 		 function modifyOnReviewStatus(review)
 		 {
 			 document.getElementById("deadline").textContent = getFormatDate(new Date(review.deadline)) + "  " + getFormatTime(new Date(review.deadline));
-		    
+		     
+		     console.log(review.excuse)
+		     const excuse = new Date(review.excuse)
+		     const currentDate = new Date()
+		     
+		     if(excuse.getTime() < currentDate.getTime())
+		     {
+				 document.getElementById("submission").disabled = true
+				 document.getElementById("editSubmission").disabled = true
+			 }
+			 
 			 if(review.reviewStatus == 'submit')
 			 {
 				document.getElementById("reviewStatus").textContent = 'submitted';
@@ -540,10 +550,7 @@
 		 document.getElementById("side-drafts").setAttribute("href", `/api/drafts?token=${token}`);
 		 document.getElementById("side-submissions").setAttribute("href", `/api/submissions?token=${token}`);
 		 document.getElementById("dashboard").setAttribute("href", `/api/dashboard?token=${token}`);
-
          document.getElementById("logoImage").setAttribute("src", `/images/logoww.png?token=${token}`);
-
-		 
 		 document.getElementById("cancel").setAttribute("href", `/api/review-center?token=${token}`)
 		 
 

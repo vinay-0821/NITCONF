@@ -319,10 +319,10 @@
 										  </button>
 									      <ul class="dropdown-menu">
 										    <li><a class="dropdown-item" href="/api/review/view?paperId=${paper.id}&token=${token}">continue review</a></li>
-										    <li><a class="dropdown-item" onclick=clearReview("http://localhost:8080/api/review/clear?paperId=${paper.id}")>clear review</a></li>
+										    <li><a class="dropdown-item" onclick=clearReview(${paper.id})>clear review</a></li>
 										    <li><hr class="dropdown-divider"></li>
 										    <div class="text-center">
-										      <li> <button type="button" class="btn btn-outline-danger">decline to review</button> </li>
+										      <li> <button type="button" onclick="declineReview(${paper.id})" class="btn btn-outline-danger">decline to review</button> </li>
 										    </div>
 								         </ul>
 								      </div>
@@ -346,13 +346,30 @@
 		   
 		 
 		   
-		   async function clearReview(url)
+		   async function clearReview(paperId)
 		   {
-			  getDataFromURL(url)
-			  //again for reload
-			  window.location.href = `http://localhost:8080/api/drafts?token=${token}`
+			  if(confirm(`Are you sure want to clear all the review data associated with Id = ${paperId}`))
+			  {
+				   const url = `http://localhost:8080/api/review/clear?paperId=${paperId}`
+			       getDataFromURL(url)
+			       //again for reload
+			       window.location.href = `http://localhost:8080/api/drafts?token=${token}`
+			  }
+			 
 			 
 		   }
+		   
+		   async function declineReview(paperId)
+		  {
+		
+			  if(confirm(`Are you confirm that you wanted to decline to review for paper with Id = ${paperId}`))
+			  {
+				  const url = `/api/review/decline?paperId=${paperId}&token=${token}`
+			      const review = await getDataFromURL(url)
+			      window.location.href = `/api/drafts?token=${token}`
+			  }
+			  
+		  }
 		   
 
 		   document.getElementById("profile").setAttribute("href", `/api/profile?token=${token}`);

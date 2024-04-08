@@ -324,7 +324,7 @@
 											    <li><a class="dropdown-item" href="/api/review/view?paperId=${paper.id}&token=${token}">Edit Submission</a></li>
 											    <li><hr class="dropdown-divider"></li>
 											    <div class="text-center">
-											    <li><a class="dropdown-item btn text-danger btn-outline-danger" onclick="deleteSubmission('/api/delete-submission?paperId=${paper.id}&token=${token}')">Delete</a></li>
+											    <li><a class="dropdown-item btn text-danger btn-outline-danger" onclick="deleteSubmission(${paper.id})">Delete</a></li>
 											 
 											    </div>
 									       </ul>
@@ -344,10 +344,14 @@
 		   
 		      displayReview()
 		      
-		   async function deleteSubmission(url)
+		   async function deleteSubmission(paperId)
 		   {
-			   const review = await getDataFromURL(url)
-			   window.location.href = `/api/submissions?token=${token}`
+			   if(confirm(`Are you sure want to remove the submission for Id = ${paperId}`))
+			  {
+				   const url = `/api/delete-submission?paperId=${paperId}&token=${token}`
+				   const review = await getDataFromURL(url)
+				   window.location.href = `/api/submissions?token=${token}`
+			   }
 		   }
 
 		   document.getElementById("profile").setAttribute("href", `/api/profile?token=${token}`);

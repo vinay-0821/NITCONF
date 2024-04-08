@@ -101,6 +101,24 @@ public class ApiSubmissionControllerTest {
      	
     }
     
+    @Test
+    public void EditSubmissionFailure()
+    {
+    	Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+         
+     	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+ 		
+     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.empty());
+     	
+     	ResponseEntity<Review> response = apiSubmissionsController.editSubmission(mockPaperId , new ReviewForm());
+     	
+     	assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+     	
+     	
+    }
+    
     
     @Test
     public void DeleteSubmissionSuccess()
@@ -121,6 +139,28 @@ public class ApiSubmissionControllerTest {
      	assertEquals(true, response.getBody().checkReviewForm(new ReviewForm()));
      	
     }
+    
+    
+    @Test
+    public void DeleteSubmissionFailure()
+    {
+    	Long mockPaperId = 1L;
+        String mockUsername = "tarun";
+         
+     	ReviewKey reviewKey = new ReviewKey(mockPaperId , mockUsername);
+
+ 		
+     	when(jwtExtractor.getUsernameFromToken()).thenReturn("tarun");
+     	when(reviewRepo.findById(reviewKey)).thenReturn(Optional.empty());
+     	
+     	ResponseEntity<Review> response = apiSubmissionsController.deleteSubmission(mockPaperId);
+     	
+     	assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    
+     	
+    }
+    
+    
     
     
    
