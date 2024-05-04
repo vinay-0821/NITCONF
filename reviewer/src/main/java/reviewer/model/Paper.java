@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
@@ -20,40 +23,29 @@ public class Paper {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
 	private String name;
-	
 	private String pdfLink;
-	
 	private LocalDateTime deadline;
 	
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.LAZY)             // modified to lazy form eager
     private List<Tags> tags = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "paper")
-	private List<User> user = new ArrayList<>();
-	
-	@OneToMany()
-	private List<Review> review = new ArrayList<>();
-	
+	@JsonIgnore
+	@OneToMany(mappedBy= "paper")
+	private List<Review> review;                           //change to set?
+
 	public Paper()
 	{
 		
 	}
 	
-	public Paper(Long id, String name, String pdfLink, LocalDateTime deadline, List<Tags> tags, List<User> user,
-			List<Review> review) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.pdfLink = pdfLink;
-		this.deadline = deadline;
-		this.tags = tags;
-		this.user = user;
-		this.review = review;
+	
+	public Paper(Long id)
+	{
+	    this.id = id;
 	}
-
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -94,14 +86,6 @@ public class Paper {
 		this.tags = tags;
 	}
 
-	public List<User> getUser() {
-		return user;
-	}
-
-	public void setUser(List<User> user) {
-		this.user = user;
-	}
-
 	public List<Review> getReview() {
 		return review;
 	}
@@ -109,7 +93,6 @@ public class Paper {
 	public void setReview(List<Review> review) {
 		this.review = review;
 	}
-
 	
 	
 
